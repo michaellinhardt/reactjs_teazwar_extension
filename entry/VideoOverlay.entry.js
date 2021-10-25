@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 
+const h = require('../helpers')
+
 class App extends React.Component {
   constructor (props) {
     super(props)
@@ -9,7 +11,7 @@ class App extends React.Component {
   render () {
     return <>
       <div className='App'>
-        <p>Hello world! Video Overlayyeuuuehqwd</p>
+        <p>{h.language.get('menu', 'hello', 'world')}</p>
         <p>{this.entry}</p>
       </div>
     </>
