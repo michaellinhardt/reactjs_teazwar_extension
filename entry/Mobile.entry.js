@@ -16,4 +16,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render( <App />, document.getElementById('root'))
+setTimeout(() => { ReactDOM.render( <App />, document.getElementById('root')) }, 1)
