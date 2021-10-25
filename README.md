@@ -1,2 +1,1 @@
-# teazwar_extension
-TeazWar Extension, a twitch game
+# One Code Base, Multiple Extentions
