@@ -1,21 +1,27 @@
-import ReactDOM from 'react-dom'
-import React from 'react'
+const { ReactDOM, React, that } = require('../imports')
+const { ComponentSuperclass } = require('../superclass')
 
-const h = require('../helpers')
-
-class App extends React.Component {
+class App extends ComponentSuperclass {
   constructor (props) {
     super(props)
+  }
+
+  componentDidMount () {
+    this.instanciateLibraries()
   }
 
   render () {
     return <>
       <div className='App'>
-        <p>{h.language.get('menu', 'hello', 'world')}</p>
-        <p>{this.entry}</p>
+        <p>{that.lang('menu', 'hello', 'world')}</p>
       </div>
     </>
   }
 }
 
-setTimeout(() => { ReactDOM.render( <App />, document.getElementById('root')) }, 1)
+// eslint-disable-next-line no-unused-vars
+document.addEventListener("DOMContentLoaded", function (event) {
+  setTimeout(() => {
+    ReactDOM.render(<App />, document.getElementById('root'))
+  }, 1)
+})

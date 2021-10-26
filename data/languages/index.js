@@ -1,5 +1,7 @@
 module.exports = {
 
+  build: '0.1',
+
   en: {
     auras: require('./en/auras.en.language'),
     menu: require('./en/menu.en.language'),

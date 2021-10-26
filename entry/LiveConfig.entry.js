@@ -10,10 +10,14 @@ class App extends React.Component {
     return <>
       <div className='App'>
         <p>Hello world!</p>
-        <p>{this.entry}</p>
       </div>
     </>
   }
 }
 
-setTimeout(() => { ReactDOM.render( <App />, document.getElementById('root')) }, 1)
+// eslint-disable-next-line no-unused-vars
+document.addEventListener("DOMContentLoaded", function (event) {
+  setTimeout(() => {
+    ReactDOM.render(<App />, document.getElementById('root'))
+  }, 1)
+})

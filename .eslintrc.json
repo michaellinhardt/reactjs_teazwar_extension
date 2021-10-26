@@ -22,7 +22,7 @@
       "max-len": [
         "warn",
         {
-          "code": 100
+          "code": 150
         }
       ],
       "no-sync": 0,

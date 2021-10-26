@@ -1,6 +1,8 @@
 const _ = require('lodash')
-const language = require('../../languages')
 const config = require('../../config')
+const languages = require('../../data/languages')
+
+// console.debug('yo bitch', require('../../imports'), window._teazwar)
 
 const replacer = (message, ...args) => {
   let msg = message
@@ -11,7 +13,7 @@ const replacer = (message, ...args) => {
 }
 
 const extractMessage = (lang, language_file, language_key) => {
-  const message = _.get(language, `${lang}.${language_file}.${language_key}`, language_key)
+  const message = _.get(languages, `${lang}.${language_file}.${language_key}`, language_key)
   return typeof (message) === 'object' && Array.isArray(message)
     ? _.sample(message) : message
 }
@@ -23,7 +25,7 @@ const get = (lang, language_file, language_key, ...language_args) => {
 
 module.exports = {
 
-  get: (...args) => get(config.language.default, ...args),
+  lang: (...args) => get(config.language.default, ...args),
   fr: (...args) => get('fr', ...args),
   en: (...args) => get('en', ...args),
 

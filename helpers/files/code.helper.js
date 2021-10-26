@@ -47,7 +47,9 @@ module.exports = {
     && objectVar !== null
     && !(objectVar instanceof Date)),
 
-  sleep: ms => new Promise(resolve => { setTimeout(resolve, ms) }),
+  sleep: (ms = 1) => new Promise(resolve => { setTimeout(resolve, ms) }),
+  delay: (callback, ...args) => setTimeout(() => callback(...args), 1),
+  delayms: (ms, callback, ...args) => setTimeout(() => callback(...args), ms),
 
 }
 

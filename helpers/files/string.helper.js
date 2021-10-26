@@ -1,4 +1,4 @@
-const uuid = require('uuid').v1
+const { uuid } = require('../../imports')
 
 const firstCharUpper = string => {
   const lowered = string.toLowerCase()
