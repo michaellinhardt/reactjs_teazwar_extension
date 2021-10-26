@@ -5,7 +5,9 @@ export default {
 
   sharedRunNextTimestamps: {},
 
-  scene: null,
+  scene: {
+    name: null,
+  },
 
   twitch_player: {
     isVisible: true,

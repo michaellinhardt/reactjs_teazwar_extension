@@ -43,7 +43,8 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
   }
 
   isForbiddenScene () {
-    return that.config.loop.forbidenScene.includes(that.sceneName())
+    const sceneName = _.get(that.store.getState(), 'ui.scene.name', null)
+    return that.config.loop.forbidenScene.includes(sceneName)
   }
 
 }
