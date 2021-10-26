@@ -8,8 +8,6 @@ module.exports = class AuthLibrary extends LibrarySuperclass {
     console.debug('running Auth method...')
   }
 
-  isLinked () { return that.twitch.isLinked() }
-
   isLogged () {
     return _.get(that.getStore(), 'ressources.jwtoken', false)
   }

@@ -1,5 +1,6 @@
 require('regenerator-runtime/runtime')
 
+
 if (!window._teazwar) {
   console.debug('CREATING GLOBAL _TEAZWAR')
 
@@ -16,6 +17,9 @@ if (!window._teazwar) {
       },
     },
 
+    // Socket connection
+    socket: null,
+
     // ressources
     helpers: require('./helpers'),
     config: require('./config'),
@@ -23,6 +27,7 @@ if (!window._teazwar) {
     store: require('./redux').store,
 
     // ressources data
+    scenes: require('./data/scenes'),
     images: require('./data/images'),
     languages: require('./data/languages'),
 
@@ -41,4 +46,8 @@ module.exports = {
   uuid: require('uuid').v1,
   ReactDOM: require('react-dom'),
   React: require('react'),
+  Img: require('react-image').Img,
+  io: require('socket.io-client').io,
+  connect: require('./redux').connect,
+
 }

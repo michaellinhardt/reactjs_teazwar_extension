@@ -1,11 +1,13 @@
 const { ReactDOM, React, that } = require('../imports')
 const { ComponentSuperclass } = require('../superclass')
 const { store, ui, inputs, ressources, connect, Provider } = require('../redux')
+const Components = require('../components')
 
 class App extends ComponentSuperclass {
   constructor (props) { super(props) }
 
   registerGlobalMethods () {
+    that.scene = this.scene
     that.inputs = this.props.setInput
     that.ui = this.props.setUi
     that.uis = this.props.setUis
@@ -19,18 +21,33 @@ class App extends ComponentSuperclass {
     this.registerGlobalMethods()
     this.instanciateLibraries()
     that.twitch.startListening()
+    that.websocket.connect()
+    that.loop.start()
+  }
+
+  scene (scene_name) {
+    if (!scene_name || scene_name === this.props.scene_name) { return true }
+    that.ui('scene_name', scene_name)
+  }
+
+  renderSceneEcosystems = () => {
+    const scene_data = _.get(that, `scenes.${this.props.scene_name}`, that.scenes.loading)
+    const scene_ecosystems = _.get(scene_data, 'Ecosystems', {})
+    return _.map(scene_ecosystems, (props, name) => {
+      const Ecosystem = Components[name]
+      if (Components[name]) { return (<Ecosystem key={name} {...props} />) }
+    })
   }
 
   render () {
-    return <>
-      <div className='App'>
-        <p>{that.lang('menu', 'hello', 'world')}</p>
-      </div>
-    </>
+    return <> {this.renderSceneEcosystems()} </>
   }
 }
 
-const AppConnected = connect(null, dispatch => ({
+const AppConnected = connect(state => ({
+  scene_name: state.ui.scene_name,
+
+}), dispatch => ({
   setInput: data => dispatch(inputs.actions.setInput(data)),
   setUi: (label, data) => dispatch(ui.actions.setUi(label, data)),
   setUis: data => dispatch(ui.actions.setUis(data)),

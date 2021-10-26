@@ -1,7 +1,8 @@
 module.exports = {
   // ApiLibrary: require('./files/api.library'),
-  // AuthLibrary: require('./files/auth.library'),
+  AuthLibrary: require('./files/auth.library'),
   // EventsLibrary: require('./files/events.library'),
-  // LoopLibrary: require('./files/loop.library'),
+  LoopLibrary: require('./files/loop.library'),
+  WebsocketLibrary: require('./files/websocket.library'),
   TwitchLibrary: require('./files/twitch.library'),
 }

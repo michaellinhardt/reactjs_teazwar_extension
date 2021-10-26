@@ -4,30 +4,32 @@ const { LibrarySuperclass } = require('../../superclass')
 module.exports = class LoopLibrary extends LibrarySuperclass {
   constructor () { super ('LoopLibrary') }
 
-  startLoop () {
-    this.loop()
+  async start () {
+    try {
+      await this.loop()
+    } catch (err) { console.debug(err.message) }
 
-    const isInterval = _.get(that, 'globals.loopInterval', null)
-    if (!isInterval) {
-      const itvLoopLibrary = _.get(that, `config.library.itv${this.name}`, 1000)
-      _.set(that, 'globals.loopInterval',
-        setInterval(this.loop, itvLoopLibrary))
-    }
+    const itvLoopLibrary = _.get(that, `config.library.itv${this.name}`, 500)
+    setTimeout(this.start, itvLoopLibrary)
   }
 
   async loop () {
-    if (this.isForbiddenScene()) {
-      return true
+    if (this.isForbiddenScene()) { return true }
+
+    if (!that.socket || !that.socket.connected) {
+      return that.websocket.connect()
     }
 
-    const isLinked = that.auth.isLinked()
+    that.scene('all_hide')
+
+    const isLinked = that.twitch.isLinked()
     if (!isLinked) { return this.unLinkLoop() }
 
 
-    const isLogged = that.auth.isLogged()
-    if (!isLogged) { return this.unAuthLoop() }
+    // const isLogged = that.auth.isLogged()
+    // if (!isLogged) { return this.unAuthLoop() }
 
-    return this.authLoop()
+    // return this.authLoop()
   }
 
   async unLinkLoop() {
@@ -43,7 +45,7 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
   }
 
   isForbiddenScene () {
-    const sceneName = _.get(that.store.getState(), 'ui.scene.name', null)
+    const sceneName = _.get(that.store.getState(), 'ui.scene_name', null)
     return that.config.loop.forbidenScene.includes(sceneName)
   }
 
