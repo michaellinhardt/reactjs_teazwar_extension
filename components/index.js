@@ -1,5 +1,6 @@
 module.exports = {
     ImageAtom: require('./atoms/image.atom'),
 
-    LoadingEcosystems: require('./ecosystems/loading.ecosystems'),
+    LoadingEcosystem: require('./ecosystems/loading.ecosystem'),
+    DialogueEcosystem: require('./ecosystems/dialogue.ecosystem'),
 }

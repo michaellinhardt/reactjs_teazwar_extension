@@ -6,6 +6,8 @@ module.exports = class ComponentSuperclass extends React.Component {
     that.helpers.code.autoBindMethod(this)
   }
 
+  classNames (arraysClass) { return arraysClass.join(' ') }
+
   instanciateLibraries () {
     const Library = require('../../library')
     _.forEach(Library, (classAddr, className) => {

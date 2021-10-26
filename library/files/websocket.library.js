@@ -27,7 +27,6 @@ module.exports = class WebsocketLibrary extends LibrarySuperclass {
 
   connect() {
     if (that.socket) { return that.socket }
-    console.debug('start connection')
     that.scene('loading')
 
     that.socket = io(that.config.url.socket)

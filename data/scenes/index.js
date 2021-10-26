@@ -2,7 +2,12 @@ module.exports = {
     all_hide: {},
     loading: {
         Ecosystems: {
-            LoadingEcosystems: {},
+            LoadingEcosystem: {},
+        },
+    },
+    dialogue_only: {
+        Ecosystems: {
+            DialogueEcosystem: {},
         },
     },
 }

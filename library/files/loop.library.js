@@ -20,7 +20,7 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
       return that.websocket.connect()
     }
 
-    that.scene('all_hide')
+    that.scene('dialogue_only')
 
     const isLinked = that.twitch.isLinked()
     if (!isLinked) { return this.unLinkLoop() }

@@ -3,7 +3,7 @@ const { ComponentSuperclass } = require('../../superclass')
 
 const ImageAtom = require('../atoms/image.atom')
 
-class LoadingEcosystems extends ComponentSuperclass {
+class LoadingEcosystem extends ComponentSuperclass {
   render () {
 
 
@@ -11,20 +11,18 @@ class LoadingEcosystems extends ComponentSuperclass {
       ? that.images.global.logo_icon
       : that.images.global.logo_icon_disconnected
 
-      console.debug('render loading eco', image)
-
     return <>
-        <div className={'LayoutDiv_TopRight LoadingEcosystems_MainDiv AnimHeartbeat2'}>
+        <div className={'LayoutDiv_Pos_TopRight LoadingEcosystem_MainDiv AnimHeartbeat2'}>
             <ImageAtom
                 src={image}
-                className={'LoadingEcosystems_LogoIcon'}
+                className={'LoadingEcosystem_LogoIcon'}
             />
         </div>
     </>
   }
 }
 
-const LoadingEcosystemsConnected = connect(state => ({
+const LoadingEcosystemConnected = connect(state => ({
   isSocketConnected: state.ui.isSocketConnected,
 
 }), dispatch => ({
@@ -34,6 +32,6 @@ const LoadingEcosystemsConnected = connect(state => ({
   resetRessources: data => dispatch(ressources.actions.resetRessources(data)),
   saveRessources: data => dispatch(ressources.actions.saveRessources(data)),
 
-}))(LoadingEcosystems)
+}))(LoadingEcosystem)
 
-module.exports = LoadingEcosystemsConnected
+module.exports = LoadingEcosystemConnected

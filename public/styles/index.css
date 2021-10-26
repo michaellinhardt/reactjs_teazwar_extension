@@ -1,8 +1,14 @@
 /* Layout */
-@import './files/layout.div.style.css';
+@import './layout/div.layout.style.css';
 
 /* Animation */
-@import './files/anim.heartbeat.style.css';
+@import './anim/heartbeat.anim.style.css';
 
 /* Components */
-@import './files/loading.ecosystems.style.css';
+@import './ecosystems/loading.ecosystems.style.css';
+@import './ecosystems/dialogue.ecosystems.style.css';
+
+body *{
+    margin: 0px;
+    padding: 0px;
+}

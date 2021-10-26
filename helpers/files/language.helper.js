@@ -2,8 +2,6 @@ const _ = require('lodash')
 const config = require('../../config')
 const languages = require('../../data/languages')
 
-// console.debug('yo bitch', require('../../imports'), window._teazwar)
-
 const replacer = (message, ...args) => {
   let msg = message
   _.forEach(args, value => {

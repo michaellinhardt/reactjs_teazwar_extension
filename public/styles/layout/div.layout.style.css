@@ -1,0 +1,25 @@
+.LayoutDiv_Pos_TopRight
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.LayoutDiv_Pos_TopLeft
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.LayoutDiv_Pos_Bottom
+{
+    position: absolute;
+    bottom: 0;
+}
+
+.LayoutDiv_Pos_Top
+{
+    position: absolute;
+    top: 0;
+}
