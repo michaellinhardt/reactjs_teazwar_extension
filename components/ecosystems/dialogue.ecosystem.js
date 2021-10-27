@@ -10,11 +10,11 @@ class DialogueEcosystem extends ComponentSuperclass {
     div: {
       main: ['layout_div_bottom_pos'],
       padding: [],
-      dialFull: [ 'layout_div_fullWH_pos', 'layout_div_boxFF7_style', ],
+      dialFull: [ 'layout_div_fullWH_pos', 'layout_div_boxRPG_style', 'layout_div_shadow80_style' ],
 
       titleLeft: [ 'layout_div_top_pos' ],
-      faceLeft: [ 'layout_div_boxFF7_style', 'layout_div_floatLeft_pos' ],
-      dialRight: [ 'layout_div_boxFF7_style', 'layout_div_floatRight_pos' ],
+      faceLeft: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatLeft_pos' ],
+      dialRight: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatRight_pos' ],
     },
     p: {
       dialogue: [ 'layout_p_boxFF7_style', 'layout_p_noSelect_style' ],
@@ -37,7 +37,7 @@ class DialogueEcosystem extends ComponentSuperclass {
         <ImageTilesetMolecule
           src={that.images.global.face_example}
           size={'4x2'}
-          pos={'0x0'}
+          pos={'1x1'}
         />
     </div>
     <div className={this.div.dialRight}>
@@ -50,8 +50,9 @@ class DialogueEcosystem extends ComponentSuperclass {
   render () {
 
     return <>
+
         <div className={this.div.main}>
-          {this.renderDialogueFaceLeft}
+            {this.renderDialogueFaceLeft}
         </div>
     </>
   }

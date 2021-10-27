@@ -1,10 +1,11 @@
 /* Layout */
 @import './layout/div.layout.style.css';
 @import './layout/p.layout.style.css';
-@import './layout/ff7.layout.style.css';
+@import './layout/box.rpg.layout.style.css';
 
 /* Animation */
 @import './anim/heartbeat.anim.style.css';
+@import './anim/typing.anim.style.css';
 
 /* Ecosystems */
 @import './ecosystems/loading.ecosystem.style.css';

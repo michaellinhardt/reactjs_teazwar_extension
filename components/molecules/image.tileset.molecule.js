@@ -1,20 +1,28 @@
-const { React, that, _, connect } = require('../../imports')
+const { React } = require('../../imports')
 const { ComponentSuperclass } = require('../../superclass')
 
 module.exports = class ImageTilesetMolecule extends ComponentSuperclass {
-  constructor (props) { super(props, 'imageTilesetMol') }
+  constructor (props) {
+    super(props, 'imageTilesetMol')
+    this.state = { isReady: false }
+  }
 
   cssClasses () { return {
     div: {
       main: [],
-      faceSize: [],
+      delimiter: [],
     },
     img: {
       tileset: [],
     },
   } }
 
+  componentDidMount () {
+    setTimeout(() => this.setState({isReady: true}), 1)
+  }
+
   render () {
+    if (!this.state.isReady) { return true }
 
     const img_tileset_src = this.props.src
     const size = this.props.size.split('x')
@@ -27,11 +35,8 @@ module.exports = class ImageTilesetMolecule extends ComponentSuperclass {
     }
 
     return <>
-        <div className={this.div.faceSize}>
-          <div
-            className={this.div.main}
-            // style={{backgroundImage:  `url(${that.images.global.face_example})`}}
-          >
+        <div className={this.div.main}>
+          <div className={this.div.delimiter}>
               <img
                 className={this.img.tileset}
                 src={img_tileset_src}

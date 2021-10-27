@@ -16,12 +16,13 @@ module.exports = class ComponentSuperclass extends React.Component {
     _.forEach(classObject, (classDescription, elemType) => {
       _.forEach(classDescription, (arraysClass, elemId) => {
         const classNames = [
+          `${this.componentId}_${elemType}_${elemId}`,
           `${this.componentId}_${elemType}_${elemId}_style`,
           `${this.componentId}_${elemType}_${elemId}_pos`,
           ...arraysClass,
         ]
 
-        if (elemType === 'div' && elemId === 'main') {
+          if (elemType === 'div' && elemId === 'main') {
           classNames.unshift(`${this.componentId}_target_all`)
         }
         _.set(this, `${elemType}.${elemId}`, classNames.join(' '))
