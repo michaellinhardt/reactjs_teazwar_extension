@@ -14,6 +14,7 @@ module.exports = {
     logo_icon_disconnected: require('./files/global/logo_icon_disconnected.png').default,
     logo_text: require('./files/global/logo_text.png').default,
     loader: require('./files/global/loader.gif').default,
+    face_example: require('./files/global/face_example.png').default,
   },
 
 }

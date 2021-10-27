@@ -1,32 +1,4 @@
-.DialogueEcosystem_MainDiv
-*{
-    overflow: hidden;
-}
-
-.DialogueEcosystem_MainDiv
-{
-    width: 99%;
-    height: 25%;
-    margin-left: 0.5%;
-    margin-bottom: 0.5%;
-}
-
-.DialogueEcosystem_Pos_BoxFace {
-    width: 25%;
-    height: 100%;
-}
-
-.DialogueEcosystem_Pos_BoxFull {
-    width: 100%;
-    height: 100%;
-}
-
-.DialogueEcosystem_Pos_BoxFace {
-    width: 100%;
-    height: 100%;
-}
-
-.DialogueEcosystem_Style_BoxFF7 {
+.layout_div_boxFF7_style {
     border: solid 1px #424542;
     box-shadow: 1px 1px #e7dfe7,
                 -1px -1px #e7dfe7,
@@ -46,13 +18,9 @@
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
     border-radius: 7px;
-  }
+}
 
-.DialogueEcosystem_Pos_Text {
-    padding: 4px 5px 0px 8px;
- }
-
-.DialogueEcosystem_Style_Text {
+.layout_p_boxFF7_style {
     color: #eff1ff;
     text-shadow: 2px 2px #212421,
                     1px 1px #212021;

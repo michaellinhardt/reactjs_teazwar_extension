@@ -1,0 +1,32 @@
+.dialogueEco_target_all
+*{
+    overflow: hidden;
+}
+
+.dialogueEco_div_main_pos
+{
+    width: 98%;
+    height: 25%;
+    margin-left: 0.9%;
+    margin-bottom: 0.8%;
+}
+
+.dialogueEco_div_padding_pos
+{
+    padding: 5px 5px 5px 10px;
+}
+
+.dialogueEco_div_titleLeft_pos {
+    left: 1%;
+    top: -21%;
+}
+
+.dialogueEco_div_faceLeft_pos {
+    width: 18%;
+    height: 100%;
+}
+
+.dialogueEco_div_dialRight_pos {
+    width: 81%;
+    height: 100%;
+}

@@ -1,25 +1,38 @@
-.LayoutDiv_Pos_TopRight
+.layout_div_topRight_pos
 {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-.LayoutDiv_Pos_TopLeft
+.layout_div_topLeft_pos
 {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-.LayoutDiv_Pos_Bottom
+.layout_div_bottom_pos
 {
     position: absolute;
     bottom: 0;
 }
 
-.LayoutDiv_Pos_Top
+.layout_div_top_pos
 {
     position: absolute;
     top: 0;
+}
+
+.layout_div_floatLeft_pos {
+    float: left;
+}
+
+.layout_div_floatRight_pos {
+    float: right;
+}
+
+.layout_div_fullWH_pos {
+    width: 100%;
+    height: 100%;
 }

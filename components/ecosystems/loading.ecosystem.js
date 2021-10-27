@@ -4,18 +4,27 @@ const { ComponentSuperclass } = require('../../superclass')
 const ImageAtom = require('../atoms/image.atom')
 
 class LoadingEcosystem extends ComponentSuperclass {
-  render () {
 
+  cssClasses () { return {
+    div: {
+      main: ['layout_div_topRight_pos', 'loadingEco_div_main_pos', 'anim_heartBeat2'],
+    },
+    img: {
+      logoIcon: ['loadingEco_img_logoIcon_pos'],
+    },
+  } }
+
+  render () {
 
     const image = this.props.isSocketConnected
       ? that.images.global.logo_icon
       : that.images.global.logo_icon_disconnected
 
     return <>
-        <div className={'LayoutDiv_Pos_TopRight LoadingEcosystem_MainDiv AnimHeartbeat2'}>
+        <div className={this.div.main}>
             <ImageAtom
                 src={image}
-                className={'LoadingEcosystem_LogoIcon'}
+                className={this.img.logoIcon}
             />
         </div>
     </>
