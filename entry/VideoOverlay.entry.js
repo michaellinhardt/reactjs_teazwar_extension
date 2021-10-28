@@ -14,6 +14,7 @@ class App extends ComponentSuperclass {
     that.ressources = this.props.saveRessources
     that.cleanRessources = this.props.resetRessources
     that.getStore = that.store.getState
+    that.logout = this.logout
   }
 
   componentWillUnmount(){ this.twitch.stopListening() }

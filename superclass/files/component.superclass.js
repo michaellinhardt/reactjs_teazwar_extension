@@ -38,4 +38,7 @@ module.exports = class ComponentSuperclass extends React.Component {
     })
   }
 
+  logout () {
+    that.ressources({ jwtoken: null })
+  }
 }
