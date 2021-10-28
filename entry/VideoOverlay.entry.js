@@ -27,12 +27,12 @@ class App extends ComponentSuperclass {
   }
 
   scene (scene_name) {
-    if (!scene_name || scene_name === this.props.scene_name) { return true }
-    that.ui('scene_name', scene_name)
+    if (scene_name === this.props.scene_name) { return true }
+    that.ressources({ scene_name })
   }
 
   renderSceneEcosystems = () => {
-    const scene_data = _.get(that, `scenes.${this.props.scene_name}`, that.scenes.loading)
+    const scene_data = _.get(that, `scenes.${this.props.scene_name}`, that.scenes.scene_name_error)
     const scene_ecosystems = _.get(scene_data, 'Ecosystems', {})
     return _.map(scene_ecosystems, (props, name) => {
       const Ecosystem = Components[name]
@@ -50,7 +50,7 @@ class App extends ComponentSuperclass {
 }
 
 const AppConnected = connect(state => ({
-  scene_name: state.ui.scene_name,
+  scene_name: state.ressources.scene_name,
 
 }), dispatch => ({
   setInput: data => dispatch(inputs.actions.setInput(data)),

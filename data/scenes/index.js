@@ -1,5 +1,7 @@
 module.exports = {
-    all_hide: {},
+    scene_name_error: {},
+    socket_disconnected: {},
+
     dialogue_only: {
         Ecosystems: {
             DialogueEcosystem: {},

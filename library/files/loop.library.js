@@ -27,7 +27,6 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
       return true
     }
 
-    that.scene('dialogue_only')
     return true
 
 

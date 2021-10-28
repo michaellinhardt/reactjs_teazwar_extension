@@ -39,6 +39,7 @@ module.exports = class ComponentSuperclass extends React.Component {
   }
 
   logout () {
+    that.scene('socket_disconnected')
     that.ressources({ jwtoken: null })
   }
 }
