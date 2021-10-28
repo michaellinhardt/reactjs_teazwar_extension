@@ -16,9 +16,9 @@ class LoadingEcosystem extends ComponentSuperclass {
   } }
 
   render () {
-    const { isSocketConnected, isSocketCommunicating } = this.props
+    const { isSocketConnected, isSocketCommunicating, isAuth } = this.props
 
-    if (isSocketConnected && !isSocketCommunicating) { return null }
+    if (isAuth && isSocketConnected && !isSocketCommunicating) { return null }
 
     const image = this.props.isSocketConnected
       ? that.images.global.logo_icon
@@ -38,6 +38,7 @@ class LoadingEcosystem extends ComponentSuperclass {
 const LoadingEcosystemConnected = connect(state => ({
   isSocketConnected: state.ui.isSocketConnected,
   isSocketCommunicating: state.ui.isSocketCommunicating,
+  isAuth: state.ressources.jwtoken,
 
 }), dispatch => ({
   setInput: data => dispatch(inputs.actions.setInput(data)),
