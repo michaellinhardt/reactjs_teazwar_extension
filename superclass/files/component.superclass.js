@@ -10,9 +10,7 @@ module.exports = class ComponentSuperclass extends React.Component {
 
   generateCss () {
     if (!this.cssClasses) { return true }
-
     const classObject = this.cssClasses()
-
     _.forEach(classObject, (classDescription, elemType) => {
       _.forEach(classDescription, (arraysClass, elemId) => {
         const classNames = [
@@ -22,7 +20,7 @@ module.exports = class ComponentSuperclass extends React.Component {
           ...arraysClass,
         ]
 
-          if (elemType === 'div' && elemId === 'main') {
+        if (elemType === 'div' && elemId === 'main') {
           classNames.unshift(`${this.componentId}_target_all`)
         }
         _.set(this, `${elemType}.${elemId}`, classNames.join(' '))

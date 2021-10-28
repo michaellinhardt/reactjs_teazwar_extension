@@ -9,45 +9,16 @@ module.exports = class TwitchLibrary extends LibrarySuperclass {
     this.registerTwitchApi()
   }
 
-  isLinked () { return (typeof (this.getUserId()) === 'string') }
-  getJwtoken () { return _.get(this, '_twitch.viewer.sessionToken', null) }
-  getSubscription () { return _.get(this, '_twitch.viewer.subscriptionStatus.tier', null) }
-  getUserId () { return _.get(this, '_twitch.viewer.id', null) }
-  getViewer () {
-    return {
-      jwtoken: this.getJwtoken(),
-      subscription: this.getSubscription(),
-      user_id: this.getUserId(),
-    }
+  isAuth () { return this.getJwtoken() }
+  getJwtoken () {
+    return _.get(this, '_twitch.viewer.sessionToken', null)
+      || _.get(that.store.getState(), 'ui.twitch_auth.token', null)
   }
 
   initViewerInRedux () { return this.onViewerChange() }
-  async onViewerChange () {
-    const viewer = this.getViewer()
-    await that.ui('twitch_viewer', viewer)
-  }
 
-  async onAuthorized (auth) {
-
-    // channelId    Channel ID of the page where the extension is iframe embedded.
-    // clientId     Client ID of the extension.
-    // token 	    JWT that should be passed to any EBS call for authentication.
-    // helixToken 	JWT that can be used for front end API requests. See Using the Twitch API in an Extension Front End.
-    // userId 	    Opaque user ID.
-
-    const store = that.getStore()
-    const currValues = _.get(store, 'ui.twitch_auth', {})
-    const newValues = {}
-    let isChange = false
-    _.forEach(auth, (propValue, propName) => {
-      if (currValues[propName] !== undefined) {
-        isChange = true
-        newValues[propName] = propValue
-      }
-    })
-
-    if (isChange) { await that.ui('twitch_auth', newValues) }
-  }
+  async onViewerChange () { that.ui('twitch_viewer', this._twitch.viewer) }
+  async onAuthorized (twitch_auth) { that.ui('twitch_auth', twitch_auth) }
 
   async onContextChange (context, delta = []) {
     const store = that.getStore()

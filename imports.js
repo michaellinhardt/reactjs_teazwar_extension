@@ -2,8 +2,6 @@ require('regenerator-runtime/runtime')
 
 
 if (!window._teazwar) {
-  console.debug('CREATING GLOBAL _TEAZWAR')
-
   const helpers = require('./helpers')
 
   window._teazwar = {
@@ -17,6 +15,9 @@ if (!window._teazwar) {
       },
     },
 
+    emits: {},
+    timeouts: {},
+
     // Socket connection
     socket: null,
 
@@ -24,6 +25,7 @@ if (!window._teazwar) {
     helpers: require('./helpers'),
     config: require('./config'),
     apis: require('./apis'),
+    sockets: require('./sockets'),
     store: require('./redux').store,
 
     // ressources data
@@ -43,7 +45,6 @@ module.exports = {
   // modules
   _: require('lodash'),
   moment: require('moment'),
-  uuid: require('uuid').v1,
   ReactDOM: require('react-dom'),
   React: require('react'),
   Img: require('react-image').Img,

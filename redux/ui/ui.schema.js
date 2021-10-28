@@ -6,6 +6,7 @@ export default {
   sharedRunNextTimestamps: {},
 
   isSocketConnected: false,
+  isSocketCommunicating: false,
 
   scene_name: null,
 
@@ -27,18 +28,9 @@ export default {
     volume: 0,
   },
 
-  twitch_viewer: {
-    jwtoken: null,
-    subscription: null,
-    user_id: null,
-  },
+  twitch_viewer: {},
 
-  twitch_auth: {
-    clientId: null,
-    helixToken: null,
-    token: null,
-    userId: null,
-  },
+  twitch_auth: {},
 
   game_event: null,
 

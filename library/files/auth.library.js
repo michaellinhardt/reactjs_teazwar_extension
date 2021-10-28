@@ -8,14 +8,15 @@ module.exports = class AuthLibrary extends LibrarySuperclass {
     console.debug('running Auth method...')
   }
 
-  isLogged () {
-    return _.get(that.getStore(), 'ressources.jwtoken', false)
-  }
+
+
+  getJwtoken () { return _.get(that.getStore(), 'ressources.jwtoken', false) }
+  isAuth () { return _.get(that.getStore(), 'ressources.jwtoken', false) }
 
   // LOGOUT METHOD, CAN BE CALL ANYWHERE (MAY MOVE TO LIBRARY LATER)
   async logout () {
     that.call('user', 'getUserLogout', {})
-    await that.ressources({ jwtoken: { isValidated: false } })
+    await that.ressources({ jwtoken: null })
   }
 
   async login () {

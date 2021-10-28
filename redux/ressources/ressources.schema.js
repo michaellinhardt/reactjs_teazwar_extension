@@ -1,3 +1,3 @@
 export default {
-  jwtoken: { isValidated: false },
+  jwtoken: null,
 }

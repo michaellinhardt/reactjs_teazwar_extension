@@ -1,0 +1,32 @@
+.dialogueOrg_target_all
+*{
+    overflow: hidden;
+}
+
+.dialogueOrg_div_main_pos
+{
+    width: 98%;
+    height: 20%;
+    margin-left: 0.7%;
+    margin-bottom: 1%;
+}
+
+.dialogueOrg_div_padding_pos
+{
+    padding: 6px 6px 6px 10px;
+}
+
+.dialogueOrg_div_titleLeft_pos {
+    left: 0.4%;
+    top: -25%;
+}
+
+.dialogueOrg_div_faceLeft_pos {
+    width: 13%;
+    height: 100%;
+}
+
+.dialogueOrg_div_dialRight_pos {
+    width: 85.5%;
+    height: 100%;
+}

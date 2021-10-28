@@ -40,7 +40,11 @@ class App extends ComponentSuperclass {
   }
 
   render () {
-    return <> {this.renderSceneEcosystems()} </>
+    const LoadingEcosystem = Components['LoadingEcosystem']
+    return <>
+      <LoadingEcosystem />
+      {this.renderSceneEcosystems()}
+    </>
   }
 }
 
@@ -64,5 +68,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
         <AppConnected />
       </Provider>
     </>, document.getElementById('root'))
-  }, 1)
+  }, 100)
 })

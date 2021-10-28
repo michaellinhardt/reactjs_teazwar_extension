@@ -4,17 +4,21 @@ const { ComponentSuperclass } = require('../../superclass')
 const ImageAtom = require('../atoms/image.atom')
 
 class LoadingEcosystem extends ComponentSuperclass {
+  constructor(props) { super(props, 'loadingEco') }
 
   cssClasses () { return {
     div: {
-      main: ['layout_div_topRight_pos', 'loadingEco_div_main_pos', 'anim_heartBeat2'],
+      main: ['layout_div_topRight_pos', 'anim_heartBeat1'],
     },
     img: {
-      logoIcon: ['loadingEco_img_logoIcon_pos'],
+      logoIcon: [],
     },
   } }
 
   render () {
+    const { isSocketConnected, isSocketCommunicating } = this.props
+
+    if (isSocketConnected && !isSocketCommunicating) { return null }
 
     const image = this.props.isSocketConnected
       ? that.images.global.logo_icon
@@ -33,6 +37,7 @@ class LoadingEcosystem extends ComponentSuperclass {
 
 const LoadingEcosystemConnected = connect(state => ({
   isSocketConnected: state.ui.isSocketConnected,
+  isSocketCommunicating: state.ui.isSocketCommunicating,
 
 }), dispatch => ({
   setInput: data => dispatch(inputs.actions.setInput(data)),

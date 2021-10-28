@@ -13,7 +13,7 @@ module.exports = class LibrarySuperclass {
   }
 
   saveNextRunTimestamp () {
-    const itvLibraryRun = _.get(that, `config.library.itvLibraryRuns.itv${this.name}`, 0)
+    const itvLibraryRun = _.get(that, `config.library.itvLibraryRuns.itv${this.name}`, 1000)
     const currTimestampMs = Date.now()
     const nextTimestamp = currTimestampMs + itvLibraryRun
     that.library.tsnLibraryRuns[this.name] = nextTimestamp

@@ -11,6 +11,9 @@
 @import './ecosystems/loading.ecosystem.style.css';
 @import './ecosystems/dialogue.ecosystem.style.css';
 
+/* Organisms */
+@import './organisms/dialogue.organism.style.css';
+
 /* Molecules */
 @import './molecules/image.tileset.molecule.style.css';
 

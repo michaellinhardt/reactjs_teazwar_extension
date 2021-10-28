@@ -7,9 +7,9 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
   async start () {
     try {
       await this.loop()
-    } catch (err) { console.debug(err.message) }
+    } catch (err) { console.info(err.message) }
 
-    const itvLoopLibrary = _.get(that, `config.library.itv${this.name}`, 500)
+    const itvLoopLibrary = _.get(that, `config.loop.itvLoop`, 1000)
     setTimeout(this.start, itvLoopLibrary)
   }
 
@@ -20,14 +20,19 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
       return that.websocket.connect()
     }
 
+    if (!that.twitch.isAuth()) { return false }
+
+    if (!that.auth.isAuth()) {
+      const result = await that.emit('user', 'auth')
+      return true
+    }
+
     that.scene('dialogue_only')
-
-    const isLinked = that.twitch.isLinked()
-    if (!isLinked) { return this.unLinkLoop() }
+    return true
 
 
-    // const isLogged = that.auth.isLogged()
-    // if (!isLogged) { return this.unAuthLoop() }
+    // const isAuth = that.auth.isAuth()
+    // if (!isAuth) { return this.unAuthLoop() }
 
     // return this.authLoop()
   }
