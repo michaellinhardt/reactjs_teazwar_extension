@@ -17,7 +17,7 @@ class App extends ComponentSuperclass {
     that.logout = this.logout
   }
 
-  componentWillUnmount(){ this.twitch.stopListening() }
+  componentWillUnmount(){ that.twitch.stopListening() }
   componentDidMount () {
     this.registerGlobalMethods()
     this.instanciateLibraries()
