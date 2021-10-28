@@ -15,30 +15,38 @@ class LoadingEcosystem extends ComponentSuperclass {
     },
   } }
 
+  renderImage (image) { return <>
+    <div className={this.div.main}>
+        <ImageAtom
+            src={image}
+            className={this.img.logoIcon}
+        />
+    </div>
+  </> }
+
   render () {
-    const { isSocketConnected, isSocketCommunicating, isAuth } = this.props
+    const { isSocketConnected, isSocketCommunicating } = this.props
 
-    if (isAuth && isSocketConnected && !isSocketCommunicating) { return null }
+    const imageDisconnected = that.images.global.logo_icon_disconnected
+    const imageConnected = that.images.global.logo_icon
 
-    const image = this.props.isSocketConnected
-      ? that.images.global.logo_icon
-      : that.images.global.logo_icon_disconnected
+    if (!that || !that.auth || !that.auth.isAuth()) {
+      return this.renderImage(imageDisconnected)
+    }
 
-    return <>
-        <div className={this.div.main}>
-            <ImageAtom
-                src={image}
-                className={this.img.logoIcon}
-            />
-        </div>
-    </>
+    if (isSocketConnected && !isSocketCommunicating) { return null }
+
+    return this.props.isSocketConnected
+     ? this.renderImage(imageConnected)
+     : this.renderImage(imageDisconnected)
   }
 }
 
 const LoadingEcosystemConnected = connect(state => ({
   isSocketConnected: state.ui.isSocketConnected,
   isSocketCommunicating: state.ui.isSocketCommunicating,
-  isAuth: state.ressources.jwtoken,
+  jwtokenTwitch: state.ui.twitch_auth.token,
+  jwtokenRessources: state.ressources.jwtoken,
 
 }), dispatch => ({
   setInput: data => dispatch(inputs.actions.setInput(data)),
