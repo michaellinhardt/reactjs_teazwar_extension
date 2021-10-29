@@ -114,7 +114,7 @@ module.exports = (_env, argv) => {
       https: {
         cert: fs.readFileSync('./config/certificates/mkcert.cert.pem'),
         key: fs.readFileSync('./config/certificates/mkcert.key.pem'),
-        ca: fs.readFileSync('/Users/mikaopenlife/Library/Application\ Support/mkcert/rootCA.pem'),
+        ca: fs.readFileSync('./config/certificates/rootCA.pem'),
       }
     }
   }
