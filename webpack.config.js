@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 
@@ -32,7 +33,7 @@ module.exports = (_env, argv) => {
   const plugins = [
     // new CleanWebpackPlugin(['dist']),
     new CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     // new webpack.DefinePlugin({
     //   'process.env.NODE_ENV': JSON.stringify(argv.mode || 'development')
     // }),
@@ -109,9 +110,15 @@ module.exports = (_env, argv) => {
       },
       webSocketServer: 'ws',
       port: 8080,
-      https: true,
+      // https: true,
+      https: {
+        cert: fs.readFileSync('./config/certificates/mkcert.cert.pem'),
+        key: fs.readFileSync('./config/certificates/mkcert.key.pem'),
+        ca: fs.readFileSync('/Users/mikaopenlife/Library/Application\ Support/mkcert/rootCA.pem'),
+      }
     }
   }
+
   if (argv.mode === 'production') {
     config.optimization.splitChunks = {
       cacheGroups: {
