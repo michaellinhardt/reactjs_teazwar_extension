@@ -1,8 +1,8 @@
 const { that, _ } = require('../../imports')
 const { GameSuperclass } = require('../../superclass')
 
-module.exports = class LoopGame extends GameSuperclass {
-  constructor () { super ('LoopGame') }
+module.exports = class SceneGame extends GameSuperclass {
+  constructor () { super ('SceneGame') }
 
   getSceneName () { return _.get(that.getStore(), 'ressources.scene_name', 'scene_name_error') }
 

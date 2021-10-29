@@ -4,7 +4,10 @@ const { store, ui, inputs, ressources, connect, Provider } = require('../redux')
 const Components = require('../components')
 
 class App extends ComponentSuperclass {
-  constructor (props) { super(props) }
+  constructor (props) {
+    super(props)
+    this.state = { isReady: false }
+  }
 
   registerGlobalMethods () {
     that.inputs = this.props.setInput
@@ -24,6 +27,7 @@ class App extends ComponentSuperclass {
     that.twitch.startListening()
     that.websocket.connect()
     that.loop.start()
+    this.setState({ isReady: true })
   }
 
   renderSceneEcosystems = () => {
@@ -36,9 +40,9 @@ class App extends ComponentSuperclass {
   }
 
   render () {
-    const LoadingEcosystem = Components['LoadingEcosystem']
+    if (!this.state.isReady) { return <Components.LoadingEcosystem /> }
     return <>
-      <LoadingEcosystem />
+      <Components.LoadingEcosystem />
       {this.renderSceneEcosystems()}
     </>
   }
