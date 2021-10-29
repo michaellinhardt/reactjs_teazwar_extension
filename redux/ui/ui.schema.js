@@ -8,8 +8,6 @@ export default {
   isSocketConnected: false,
   isSocketCommunicating: false,
 
-  scene_name: null,
-
   twitch_player: {
     isVisible: true,
 
@@ -29,9 +27,6 @@ export default {
   },
 
   twitch_viewer: {},
-
   twitch_auth: {},
-
-  game_event: null,
 
 }

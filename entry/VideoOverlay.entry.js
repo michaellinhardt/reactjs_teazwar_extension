@@ -7,7 +7,6 @@ class App extends ComponentSuperclass {
   constructor (props) { super(props) }
 
   registerGlobalMethods () {
-    that.scene = this.scene
     that.inputs = this.props.setInput
     that.ui = this.props.setUi
     that.uis = this.props.setUis
@@ -21,18 +20,14 @@ class App extends ComponentSuperclass {
   componentDidMount () {
     this.registerGlobalMethods()
     this.instanciateLibraries()
+    this.instanciateGames()
     that.twitch.startListening()
     that.websocket.connect()
     that.loop.start()
   }
 
-  scene (scene_name) {
-    if (scene_name === this.props.scene_name) { return true }
-    that.ressources({ scene_name })
-  }
-
   renderSceneEcosystems = () => {
-    const scene_data = _.get(that, `scenes.${this.props.scene_name}`, that.scenes.scene_name_error)
+    const scene_data = that._scene.getSceneData()
     const scene_ecosystems = _.get(scene_data, 'Ecosystems', {})
     return _.map(scene_ecosystems, (props, name) => {
       const Ecosystem = Components[name]

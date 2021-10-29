@@ -23,33 +23,16 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
     if (!that.twitch.isAuth()) { return false }
 
     if (!that.auth.isAuth()) {
-      const result = await that.emit('user', 'auth')
+      await that.emit('user', 'auth')
       return true
     }
 
-    return true
+    return that._loop.run()
 
-
-    // const isAuth = that.auth.isAuth()
-    // if (!isAuth) { return this.unAuthLoop() }
-
-    // return this.authLoop()
-  }
-
-  async unLinkLoop() {
-    return that.auth.link()
-  }
-
-  async unAuthLoop() {
-    return that.auth.login()
-  }
-
-  async authLoop() {
-    return console.debug('auth loop')
   }
 
   isForbiddenScene () {
-    const sceneName = _.get(that.store.getState(), 'ui.scene_name', null)
+    const sceneName = that._scene.getSceneName()
     return that.config.loop.forbidenScene.includes(sceneName)
   }
 

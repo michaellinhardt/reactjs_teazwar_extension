@@ -38,8 +38,13 @@ module.exports = class ComponentSuperclass extends React.Component {
     })
   }
 
-  logout () {
-    that.scene('socket_disconnected')
-    that.ressources({ jwtoken: null })
+  instanciateGames () {
+    const Game = require('../../game')
+    _.forEach(Game, (classAddr, className) => {
+      const keyName = `_${className.replace('Game', '').toLowerCase()}`
+      if (!window._teazwar[keyName]) {
+        window._teazwar[keyName] = new classAddr()
+      }
+    })
   }
 }

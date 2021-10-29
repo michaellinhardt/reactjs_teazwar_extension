@@ -12,7 +12,7 @@ module.exports = class TwitchLibrary extends LibrarySuperclass {
   isAuth () { return this.getJwtoken() }
   getJwtoken () {
     return _.get(this, '_twitch.viewer.sessionToken', null)
-      || _.get(that.store.getState(), 'ui.twitch_auth.token', null)
+      || _.get(that.getStore(), 'ui.twitch_auth.token', null)
   }
 
   initViewerInRedux () { return this.onViewerChange() }

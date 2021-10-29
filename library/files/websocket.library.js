@@ -24,12 +24,12 @@ module.exports = class WebsocketLibrary extends LibrarySuperclass {
   onDisconnect (reason) {
     that.ui('isSocketConnected', false)
     console.log('Socket Disconnecter:', reason)
-    that.logout()
+    that.auth.logout()
   }
 
   onConnectError (reason) {
     console.log('Socket Connection Error')
-    that.logout()
+    that.auth.logout()
   }
 
   connect() {
@@ -61,7 +61,7 @@ module.exports = class WebsocketLibrary extends LibrarySuperclass {
 
       const error_key = _.get(result, 'ressources.error_key', '')
       if (error_key.startsWith('jwtoken')) {
-        that.logout()
+        that.auth.logout()
       }
 
       const ressources = _.get(result, 'ressources', {})
