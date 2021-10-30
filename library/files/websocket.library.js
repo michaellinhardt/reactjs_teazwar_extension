@@ -60,6 +60,9 @@ module.exports = class WebsocketLibrary extends LibrarySuperclass {
       const result = await isMethod()
 
       const error_key = _.get(result, 'ressources.error_key', '')
+      if (error_key) {
+        await that.helpers.code.sleep(that.config.socket.sleepOnError)
+      }
       if (error_key.startsWith('jwtoken')) {
         that.auth.logout()
       }

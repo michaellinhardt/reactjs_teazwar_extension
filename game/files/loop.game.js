@@ -5,6 +5,8 @@ module.exports = class LoopGame extends GameSuperclass {
   constructor () { super ('LoopGame') }
 
   run () {
-    // if (!that._data.isDataInit()) { return that._data.initData() }
+    if (!that._data.isDataInit()) {
+      return that._data.initData()
+    }
   }
 }

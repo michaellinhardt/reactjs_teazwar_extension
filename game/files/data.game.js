@@ -6,5 +6,5 @@ module.exports = class DataGame extends GameSuperclass {
 
   isDataInit () { return _.get(that.getStore(), 'ressources.isDataInit', false) }
 
-  initData () { return that.emit('data', 'init')}
+  initData () { return that.emit('data', 'init') }
 }

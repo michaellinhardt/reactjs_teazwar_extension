@@ -14,10 +14,11 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
   }
 
   async loop () {
-    if (this.isForbiddenScene()) { return true }
+    if (this.isForbiddenScene()) { return false }
 
     if (!that.socket || !that.socket.connected) {
-      return that.websocket.connect()
+      await that.websocket.connect()
+      return true
     }
 
     if (!that.twitch.isAuth()) { return false }
@@ -27,8 +28,8 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
       return true
     }
 
-    return that._loop.run()
-
+    const result = await that._loop.run()
+    return result
   }
 
   isForbiddenScene () {
