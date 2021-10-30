@@ -3,7 +3,13 @@ const { ComponentSuperclass } = require('../superclass')
 const { store, ui, inputs, ressources, connect, Provider } = require('../redux')
 
 const ComponentsObject = require('../components')
+const ListenersObject = require('../listeners')
 const Components = []
+_.forEach(ListenersObject, (Component, name) => {
+  if (name.endsWith('Listener')) {
+    Components.push(Component)
+  }
+})
 _.forEach(ComponentsObject, (Component, name) => {
   if (name.endsWith('Ecosystem')) {
     Components.push(Component)

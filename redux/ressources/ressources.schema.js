@@ -1,5 +1,5 @@
 export default {
-  jwtoken: null,
+  jwtoken: false,
 
   dialogueEco: {
     isVisible: false,

@@ -1,9 +1,16 @@
 const { that, React, _ } = require('../../imports')
 
-module.exports = class ListenerSuperclass extends React.Component {
-  constructor (config) {
-    this.name = config.name
+module.exports = class ComponentSuperclass extends React.Component {
+  constructor (props) {
+    super(props)
     that.helpers.code.autoBindMethod(this)
+  }
+
+  render () { return null }
+
+  shouldComponentUpdate () {
+    setTimeout(this.onEvent, 100)
+    return false
   }
 
 }
