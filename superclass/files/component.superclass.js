@@ -6,7 +6,32 @@ module.exports = class ComponentSuperclass extends React.Component {
     that.helpers.code.autoBindMethod(this)
     this.componentId = componentId
     this.generateCss()
+    this.local = {}
+    this.referenceMethods()
+    this.setRenderHandler()
   }
+
+  renderHandler () {
+    const store = that.store.getState()
+    const isVisible = _.get(store, `ressources.${this.componentId}.isVisible`, false)
+    if (!isVisible) { return null }
+    return this.renderMethod()
+  }
+
+  setRenderHandler () {
+    if (!this.componentId.endsWith('Eco')) { return false }
+    this.renderMethod = this.render
+    this.render = this.renderHandler
+  }
+
+  referenceMethods () {
+    _.set(that, this.componentId, {
+      setLocal: this.setLocal.bind(this),
+      setState: this.setState.bind(this),
+    })
+  }
+
+  setLocal (valueObject) { _.merge(this.local, valueObject) }
 
   generateCss () {
     if (!this.cssClasses) { return true }
@@ -28,23 +53,4 @@ module.exports = class ComponentSuperclass extends React.Component {
     })
   }
 
-  instanciateLibraries () {
-    const Library = require('../../library')
-    _.forEach(Library, (classAddr, className) => {
-      const keyName = className.replace('Library', '').toLowerCase()
-      if (!window._teazwar[keyName]) {
-        window._teazwar[keyName] = new classAddr()
-      }
-    })
-  }
-
-  instanciateGames () {
-    const Game = require('../../game')
-    _.forEach(Game, (classAddr, className) => {
-      const keyName = `_${className.replace('Game', '').toLowerCase()}`
-      if (!window._teazwar[keyName]) {
-        window._teazwar[keyName] = new classAddr()
-      }
-    })
-  }
 }

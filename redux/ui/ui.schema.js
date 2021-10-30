@@ -3,8 +3,6 @@ const config = require('../../config')
 export default {
   lang: config.language.default,
 
-  sharedRunNextTimestamps: {},
-
   isSocketConnected: false,
   isSocketCommunicating: false,
 

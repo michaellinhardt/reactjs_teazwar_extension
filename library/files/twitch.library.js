@@ -18,7 +18,12 @@ module.exports = class TwitchLibrary extends LibrarySuperclass {
   initViewerInRedux () { return this.onViewerChange() }
 
   async onViewerChange () { that.ui('twitch_viewer', this._twitch.viewer) }
-  async onAuthorized (twitch_auth) { that.ui('twitch_auth', twitch_auth) }
+
+  async onAuthorized (twitch_auth) {
+    await that.ui('twitch_auth', twitch_auth)
+
+    await that.auth.login()
+  }
 
   async onContextChange (context, delta = []) {
     const store = that.getStore()
@@ -45,7 +50,7 @@ module.exports = class TwitchLibrary extends LibrarySuperclass {
     if (isChange) { await that.ui('twitch_player', newValues) }
   }
 
-  async onVisibilityCHange (isVisible, _c) {
+  async onVisibilityChange (isVisible, _c) {
     const context = _c ? _c : {}
     context.isVisible = isVisible
     await this.onContextChange(context)
@@ -62,7 +67,7 @@ module.exports = class TwitchLibrary extends LibrarySuperclass {
 
   startListening () {
     this._twitch.onContext(this.onContextChange)
-    this._twitch.onVisibilityChanged(this.onVisibilityCHange)
+    this._twitch.onVisibilityChanged(this.onVisibilityChange)
     this._twitch.listen('broadcast', this.onBroadcastEvent)
     this._twitch.onAuthorized(this.onAuthorized)
     this._twitch.viewer.onChanged(this.onViewerChange)

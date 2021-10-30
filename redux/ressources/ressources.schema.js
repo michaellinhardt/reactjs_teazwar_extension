@@ -1,6 +1,18 @@
 export default {
   jwtoken: null,
 
-  isDataInit: false,
-  scene_name: null,
+  dialogueEco: {
+    isVisible: false,
+  },
+
+  loadingEco: {
+    isVisible: true
+  },
+
+  cutscene: {
+    cutscene_id: null,
+    cutscene_data: null,
+  },
+
+
 }

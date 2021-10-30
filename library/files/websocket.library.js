@@ -11,14 +11,15 @@ module.exports = class WebsocketLibrary extends LibrarySuperclass {
     this.imports = imports
   }
 
-  onConnect () {
+  async onConnect () {
+    await that.auth.login()
+    await that.emit('data', 'init')
     that.ui('isSocketConnected', true)
-    console.log('Socket Connected:', that.socket.id)
-    that.socket.onAny(data => this.onSocketMessage(data))
+    that.socket.onAny((...args) => this.onSocketMessage(...args))
   }
 
-  onSocketMessage (data) {
-    console.log('Socket Message:', data)
+  onSocketMessage (event, data) {
+    console.log('Socket Message:', event, data)
   }
 
   onDisconnect (reason) {

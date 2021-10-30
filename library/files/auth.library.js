@@ -8,7 +8,12 @@ module.exports = class AuthLibrary extends LibrarySuperclass {
   isAuth () { return _.get(that.getStore(), 'ressources.jwtoken', false) }
 
   logout () {
-    that._scene.setSceneName('socket_disconnected')
     that.ressources({ jwtoken: null })
+  }
+
+  async login () {
+    if (that.twitch.getJwtoken() && !this.isAuth()) {
+      await that.emit('user', 'auth')
+    }
   }
 }

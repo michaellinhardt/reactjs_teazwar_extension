@@ -16,18 +16,6 @@ module.exports = class LoopLibrary extends LibrarySuperclass {
   async loop () {
     if (this.isForbiddenScene()) { return false }
 
-    if (!that.socket || !that.socket.connected) {
-      await that.websocket.connect()
-      return true
-    }
-
-    if (!that.twitch.isAuth()) { return false }
-
-    if (!that.auth.isAuth()) {
-      await that.emit('user', 'auth')
-      return true
-    }
-
     const result = await that._loop.run()
     return result
   }

@@ -4,7 +4,10 @@ const { ComponentSuperclass } = require('../../superclass')
 const ImageAtom = require('../atoms/image.atom')
 
 class LoadingEcosystem extends ComponentSuperclass {
-  constructor(props) { super(props, 'loadingEco') }
+  constructor(props) {
+    super(props, 'loadingEco')
+    this.state = { isVisible: true }
+  }
 
   cssClasses () { return {
     div: {
@@ -43,6 +46,8 @@ class LoadingEcosystem extends ComponentSuperclass {
 }
 
 const LoadingEcosystemConnected = connect(state => ({
+  loadingEco: state.ressources.loadingEco.isVisible,
+
   isSocketConnected: state.ui.isSocketConnected,
   isSocketCommunicating: state.ui.isSocketCommunicating,
   jwtokenTwitch: state.ui.twitch_auth.token,

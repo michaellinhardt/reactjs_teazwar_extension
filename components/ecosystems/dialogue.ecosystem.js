@@ -6,10 +6,7 @@ const DialogueOrganism = require('../organisms/dialogue.organism')
 class DialogueEcosystem extends ComponentSuperclass {
   constructor (props) { super(props, 'dialogueEco') }
 
-  // cssClasses () { return {} }
-
   render () {
-
     return <>
       <DialogueOrganism />
     </>
@@ -17,7 +14,7 @@ class DialogueEcosystem extends ComponentSuperclass {
 }
 
 const DialogueEcosystemConnected = connect(state => ({
-  isSocketConnected: state.ui.isSocketConnected,
+  isVisible: state.ressources.dialogueEco.isVisible,
 
 }), null)(DialogueEcosystem)
 

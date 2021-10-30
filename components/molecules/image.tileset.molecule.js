@@ -17,9 +17,7 @@ module.exports = class ImageTilesetMolecule extends ComponentSuperclass {
     },
   } }
 
-  componentDidMount () {
-    setTimeout(() => this.setState({isReady: true}), 1)
-  }
+  componentDidMount () { setTimeout(() => this.setState({ isReady: true }), 1) }
 
   render () {
     if (!this.state.isReady) { return true }
@@ -47,10 +45,3 @@ module.exports = class ImageTilesetMolecule extends ComponentSuperclass {
     </>
   }
 }
-
-// const ImageTilesetMoleculeConnected = connect(state => ({
-//   isSocketConnected: state.ui.isSocketConnected,
-
-// }), null)(ImageTilesetMolecule)
-
-// module.exports = ImageTilesetMoleculeConnected

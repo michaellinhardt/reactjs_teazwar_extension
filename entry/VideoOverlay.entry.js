@@ -1,12 +1,29 @@
 const { ReactDOM, React, that } = require('../imports')
 const { ComponentSuperclass } = require('../superclass')
 const { store, ui, inputs, ressources, connect, Provider } = require('../redux')
-const Components = require('../components')
+
+const ComponentsObject = require('../components')
+const Components = []
+_.forEach(ComponentsObject, (Component, name) => {
+  if (name.endsWith('Ecosystem')) {
+    Components.push(Component)
+  }
+})
 
 class App extends ComponentSuperclass {
   constructor (props) {
     super(props)
-    this.state = { isReady: false }
+    // this.state = { isReady: false }
+  }
+
+  instanciateLibraries () {
+    const Library = require('../library')
+    _.forEach(Library, (classAddr, className) => {
+      const keyName = className.replace('Library', '').toLowerCase()
+      if (!window._teazwar[keyName]) {
+        window._teazwar[keyName] = new classAddr()
+      }
+    })
   }
 
   registerGlobalMethods () {
@@ -20,38 +37,26 @@ class App extends ComponentSuperclass {
   }
 
   componentWillUnmount(){ that.twitch.stopListening() }
-  componentDidMount () {
+  componentDidMount () { return this.initiateGame() }
+
+  async initiateGame () {
     this.registerGlobalMethods()
     this.instanciateLibraries()
-    this.instanciateGames()
     that.twitch.startListening()
     that.websocket.connect()
-    that.loop.start()
+    // that.loop.start()
+    that.cutscenes = require('../data/cutscenes')
+    await that.websocket.connect()
     this.setState({ isReady: true })
+    // setTimeout(() => this.setState({ isReady: true }), 300)
   }
 
-  renderSceneEcosystems = () => {
-    const scene_data = that._scene.getSceneData()
-    const scene_ecosystems = _.get(scene_data, 'Ecosystems', {})
-    return _.map(scene_ecosystems, (props, name) => {
-      const Ecosystem = Components[name]
-      if (Components[name]) { return (<Ecosystem key={name} {...props} />) }
-    })
-  }
+  renderEcosystems = () => {}
 
-  render () {
-    if (!this.state.isReady) { return <Components.LoadingEcosystem /> }
-    return <>
-      <Components.LoadingEcosystem />
-      {this.renderSceneEcosystems()}
-    </>
-  }
+  render () { return _.map(Components, (Component, index) => <Component key={index} />) }
 }
 
-const AppConnected = connect(state => ({
-  scene_name: state.ressources.scene_name,
-
-}), dispatch => ({
+const AppConnected = connect(null, dispatch => ({
   setInput: data => dispatch(inputs.actions.setInput(data)),
   setUi: (label, data) => dispatch(ui.actions.setUi(label, data)),
   setUis: data => dispatch(ui.actions.setUis(data)),
