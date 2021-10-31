@@ -15,6 +15,7 @@ export default {
 
   cutscene: {
     listener_cutscene_cutscene: 0,
+    listener_cutscene_data: 0,
     cutscene_id: null,
     cutscene_data: {
       cutscene_scene_id: null,

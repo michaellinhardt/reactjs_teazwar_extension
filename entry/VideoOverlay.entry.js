@@ -60,7 +60,7 @@ class App extends ComponentSuperclass {
 
   shouldComponentUpdate (nextProps, nextState) {
     const isReady = _.get(nextState, 'isReady', false)
-    const isRender = !nextState.isReady || !this.isLock
+    const isRender = !isReady || !this.isLock
     // console.info('should render ?', isRender)
     if (isRender) { return true }
 
@@ -95,6 +95,7 @@ class App extends ComponentSuperclass {
 
 const AppConnected = connect(state => ({
   listener_cutscene_cutscene: state.ressources.cutscene.listener_cutscene_cutscene,
+  listener_cutscene_data: state.ressources.cutscene.listener_cutscene_data,
 
 }), dispatch => ({
   setInput: data => dispatch(inputs.actions.setInput(data)),

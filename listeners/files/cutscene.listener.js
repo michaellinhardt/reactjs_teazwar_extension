@@ -6,7 +6,7 @@ module.exports = class CutsceneListener extends ListenerSuperclass {
     super()
 
     const cutscenePath = 'ressources.cutscene'
-    const cutsceneDataPath = 'ressources.cutscene.cutscene_data'
+    const cutsceneDataPath = `${cutscenePath}.cutscene_data`
 
     this.trackSchema({
       cutscene_id: `${cutscenePath}.cutscene_id`,
@@ -21,22 +21,20 @@ module.exports = class CutsceneListener extends ListenerSuperclass {
       || that.cutscene.cutscene_id !== new_id)
   }
 
-  onCutscene (current, next) {
-    this.isNewCutscene = false
-    this.isNewCutsceneScene = false
-
-    if (this.shouldInstanciateNewCutscene(
-      current.cutscene_id, next.cutscene_id
-    )) { this.instanciateNewCutscene() }
-
-      // CHANGE SCENE INSIDE CUTSCENE IF NEDED ( by reading cutscene data and compare with current cutscene data )
-  }
-
   instanciateNewCutscene () {
     const store = that.store.getState()
     const { cutscene_id, cutscene_data } = _.get(store, 'ressources.cutscene', {})
-    that.cutscene = new that.cutscenes[cutscene_id](cutscene_data)
-    this.isNewCutscene = true
+    that.cutscene = new that.cutscenes[cutscene_id]()
+  }
+
+  onCutscene (current, next) {
+    if (this.shouldInstanciateNewCutscene(
+      current.cutscene_id, next.cutscene_id
+    )) { this.instanciateNewCutscene() }
+  }
+
+  onData (current, next) {
+    console.debug('cutscene data changee,', current, next)
   }
 
 }
