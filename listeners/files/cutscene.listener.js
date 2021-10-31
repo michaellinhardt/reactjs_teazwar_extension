@@ -10,7 +10,7 @@ module.exports = class CutsceneListener extends ListenerSuperclass {
 
     this.trackSchema({
       cutscene_id: `${cutscenePath}.cutscene_id`,
-      cutscene_scene_id: `${cutsceneDataPath}.cutscene_scene_id`,
+      scene_id: `${cutsceneDataPath}.scene_id`,
     })
   }
 

@@ -61,7 +61,7 @@ class App extends ComponentSuperclass {
   shouldComponentUpdate (nextProps, nextState) {
     const isReady = _.get(nextState, 'isReady', false)
     const isRender = !isReady || !this.isLock
-    // console.info('should render ?', isRender)
+    // console.info('should render ?', isRender, isReady, this.isLock)
     if (isRender) { return true }
 
     _.forEach(nextProps, (value, name) =>
@@ -78,15 +78,19 @@ class App extends ComponentSuperclass {
     that.websocket.connect()
     // that.loop.start()
     that.cutscenes = require('../data/cutscenes')
-    await that.websocket.connect()
-    setTimeout(() => this.setState({ isReady: true }), 100)
+    this.setState({ isReady: true })
   }
 
   renderEcosystems = () => {}
 
   render () {
     const isReady = _.get(this, 'state.isReady', false)
-    if (isReady) { this.isLock = true }
+
+    if (isReady) {
+      this.isLock = true
+      setTimeout(that.websocket.connect, 300)
+    }
+
     return !isReady
       ? null
       : _.map(Components, (Component, index) => <Component key={index} />)

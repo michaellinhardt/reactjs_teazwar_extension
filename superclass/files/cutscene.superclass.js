@@ -10,11 +10,21 @@ module.exports = class CutsceneSuperclass {
 
   initScene () {
     const store = that.store.getState()
-    const cutscene_data = _.get(store, 'ressources.cutscene.cutscene_data', {})
-    const cutscene_scene_id = _.get(cutscene_data, 'cutscene_scene_id', 'entry')
+    const cutscene = _.get(store, 'ressources.cutscene', {})
 
-    if (cutscene_scene_id === this.cutscene_scene_id) { return false }
+    const scene_id = cutscene.scene_id
+    if (scene_id === this.scene_id || !this[scene_id]) { return false }
 
-    console.debug('iniet cutscene_scene_id' ,cutscene_scene_id)
+    const cutscene_scene_layout = _.get(that, `scenes.${this.cutscene_id}`, {})
+    const scene_layout = _.get(that, `scenes.${this.cutscene_id}_${scene_id}`, null)
+
+    const scene_data = scene_layout ? scene_layout : cutscene_scene_layout
+
+    console.debug('scene_data', scene_data)
+
+    // inject scene data
+
+    this[scene_id]()
+
   }
 }
