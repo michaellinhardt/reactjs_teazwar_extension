@@ -2,14 +2,40 @@ module.exports = {
 
     stranger_welcome: {
         entry: {
-
-            entry: {
-                author: 'masochix',
-                emotion: 'angry',
-                message: 'Hey you ! You stole my items !',
-                next: 'answer_stole_accusation'
-            },
-
+            face_left: 'Masochix',
+            emotion: 'angry',
+            message: 'Hey you! You stole my items ! Do you think that I will let you go away like that ?',
+            next_phrase_id: 'answer_stole_accusation',
+            animationIn: 'fadeIn',
+            animationOut: null,
+            animationInDelay: null,
+            animationOutDelay: null,
+            animationInDuration: null,
+            animationOutDuration: null,
+        },
+        answer_stole_accusation: {
+            face_right: 'TeazYou',
+            emotion: 'angry',
+            message: 'Nooooo Baby !!! You know me I would never do such :o',
+            next_phrase_id: 'liar_ma_makeup',
+            animationIn: 'fadeIn',
+            animationOut: 'fadeIn',
+            animationInDelay: null,
+            animationOutDelay: null,
+            animationInDuration: null,
+            animationOutDuration: 1,
+        },
+        liar_ma_makeup: {
+            face_left: 'Maasochix',
+            emotion: 'angry',
+            message: 'LIIIIIIIIIIIIIIIAR !!! WHERE IS MY MAKE UP ?',
+            next_phrase_id: 'xx',
+            animationIn: 'tada',
+            animationOut: null,
+            animationInDelay: null,
+            animationOutDelay: null,
+            animationInDuration: null,
+            animationOutDuration: null,
         },
     },
 }

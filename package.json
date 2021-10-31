@@ -15,10 +15,12 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "animate.css": "^4.1.1",
     "core-js": "^3.18.2",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",
+    "react-animated-css": "^1.2.1",
     "react-anime": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-image": "^4.0.3",
@@ -26,6 +28,7 @@
     "react-spring": "^9.3.0",
     "redux": "^4.1.1",
     "socket.io-client": "^4.3.2",
+    "uninstall": "^0.0.0",
     "uuid": "^8.3.2",
     "webpack": "^5.58.1"
   },

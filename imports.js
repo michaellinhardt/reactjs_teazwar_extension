@@ -51,5 +51,6 @@ module.exports = {
   Img: require('react-image').Img,
   io: require('socket.io-client').io,
   connect: require('./redux').connect,
+  Animated: require('react-animated-css').Animated,
 
 }
