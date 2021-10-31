@@ -1,7 +1,6 @@
 const config = require('../../config')
 
 export default {
-  lang: config.language.default,
 
   isSocketConnected: false,
   isSocketCommunicating: false,

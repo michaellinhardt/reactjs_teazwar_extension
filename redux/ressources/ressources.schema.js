@@ -1,5 +1,6 @@
 export default {
   jwtoken: false,
+  language: 'fr',
 
   scene_data: {
 
@@ -19,6 +20,11 @@ export default {
 
     cutscene_id: null,
     scene_id: null,
+  },
+
+  dialogue: {
+    dialogue_id: null,
+    phrase_id: null,
   },
 
 

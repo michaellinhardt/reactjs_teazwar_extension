@@ -30,6 +30,7 @@ if (!window._teazwar) {
 
     // ressources data
     scenes: require('./data/scenes'),
+    dialogues: require('./data/dialogues'),
     images: require('./data/images'),
     languages: require('./data/languages'),
 

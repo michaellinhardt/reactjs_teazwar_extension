@@ -23,7 +23,6 @@ const get = (lang, language_file, language_key, ...language_args) => {
 
 module.exports = {
 
-  lang: (...args) => get(config.language.default, ...args),
   fr: (...args) => get('fr', ...args),
   en: (...args) => get('en', ...args),
 
