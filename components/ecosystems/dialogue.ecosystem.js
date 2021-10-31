@@ -14,7 +14,7 @@ class DialogueEcosystem extends ComponentSuperclass {
 }
 
 const DialogueEcosystemConnected = connect(state => ({
-  isVisible: state.ressources.dialogueEco.isVisible,
+  isVisible: state.ressources.scene_data.dialogueEco.isVisible,
 
 }), null)(DialogueEcosystem)
 

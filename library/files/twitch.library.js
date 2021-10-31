@@ -12,7 +12,7 @@ module.exports = class TwitchLibrary extends LibrarySuperclass {
   isAuth () { return this.getJwtoken() }
   getJwtoken () {
     return _.get(this, '_twitch.viewer.sessionToken', null)
-      || _.get(that.getStore(), 'ui.twitch_auth.token', null)
+      || _.get(that.store.getState(), 'ui.twitch_auth.token', null)
   }
 
   initViewerInRedux () { return this.onViewerChange() }
@@ -26,7 +26,7 @@ module.exports = class TwitchLibrary extends LibrarySuperclass {
   }
 
   async onContextChange (context, delta = []) {
-    const store = that.getStore()
+    const store = that.store.getState()
     const currValues = _.get(store, 'ui.twitch_player', {})
     const newValues = {}
     let isChange = false

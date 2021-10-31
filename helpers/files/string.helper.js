@@ -7,7 +7,7 @@ const firstCharUpper = string => {
 
 module.exports = {
 
-  firstUpper: str => str.charAt(0) + str.substring(1).toLowerCase(),
+  firstUpper: str => str.charAt(0).toUpperCase() + str.substring(1).toLowerCase(),
   firstLower: str => str.charAt(0).toLowerCase() + str.substring(1),
 
   uuid,

@@ -46,7 +46,7 @@ class LoadingEcosystem extends ComponentSuperclass {
 }
 
 const LoadingEcosystemConnected = connect(state => ({
-  loadingEco: state.ressources.loadingEco.isVisible,
+  loadingEco: state.ressources.scene_data.loadingEco.isVisible,
 
   isSocketConnected: state.ui.isSocketConnected,
   isSocketCommunicating: state.ui.isSocketCommunicating,

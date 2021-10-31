@@ -50,7 +50,7 @@ module.exports = class ApiLibrary extends LibrarySuperclass {
   async execApiCall (callOrder) {
     const { api, method, retry } = callOrder
 
-    this.store = that.getStore()
+    this.store = that.store.getState()
     this.token = _.get(this.store, 'ressources.jwtoken', '')
 
     const isMethod = _.get(this, `${api}.${method}`, null)

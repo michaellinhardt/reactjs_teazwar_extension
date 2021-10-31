@@ -4,8 +4,8 @@ const { LibrarySuperclass } = require('../../superclass')
 module.exports = class AuthLibrary extends LibrarySuperclass {
   constructor () { super ('AuthLibrary') }
 
-  getJwtoken () { return _.get(that.getStore(), 'ressources.jwtoken', false) }
-  isAuth () { return _.get(that.getStore(), 'ressources.jwtoken', false) }
+  getJwtoken () { return _.get(that.store.getState(), 'ressources.jwtoken', false) }
+  isAuth () { return _.get(that.store.getState(), 'ressources.jwtoken', false) }
 
   logout () {
     that.ressources({ jwtoken: null })

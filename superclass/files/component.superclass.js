@@ -13,7 +13,8 @@ module.exports = class ComponentSuperclass extends React.Component {
 
   renderHandler () {
     const store = that.store.getState()
-    const isVisible = _.get(store, `ressources.${this.componentId}.isVisible`, false)
+    const scene_data_path = 'ressources.scene_data'
+    const isVisible = _.get(store, `${scene_data_path}.${this.componentId}.isVisible`, false)
     if (!isVisible) { return null }
     return this.renderMethod()
   }

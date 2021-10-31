@@ -1,15 +1,9 @@
 const { that, _ } = require('../../imports')
 
 module.exports = class CutsceneSuperclass {
-  constructor (config) {
-    this.name = config.name
+  constructor (cutscene_id, cutscene_data) {
+    this.cutscene_id = cutscene_id
+    this.cutscene_data = cutscene_data
     that.helpers.code.autoBindMethod(this)
-    this.initScene()
   }
-
-  initScene () {
-    const cutscene_data = _.get(that.getStore(), 'ressources.cutscene.cutscene_data', {})
-    const scene_name = _.get(cutscene_data, 'scene_name', scene_name_error)
-  }
-
 }
