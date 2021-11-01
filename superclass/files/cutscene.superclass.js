@@ -4,7 +4,6 @@ const { that, _ } = require('../../imports')
 module.exports = class CutsceneSuperclass {
   constructor (cutscene_id) {
     this.cutscene_id = cutscene_id
-    console.debug('i am ', this.cutscene_id)
     that.helpers.code.autoBindMethod(this)
     this.initScene()
   }

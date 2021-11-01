@@ -57,7 +57,7 @@ module.exports = class TwitchLibrary extends LibrarySuperclass {
   }
 
   async onBroadcastEvent (target, contentType, body) {
-    console.dedug(`New PubSub message!\n${target}\n${contentType}\n${body}`)
+    console.info(`New PubSub message!\n${target}\n${contentType}\n${body}`)
   }
 
   registerTwitchApi () {

@@ -1,0 +1,48 @@
+.dialogueFaceMol_div_padding_pos
+{
+    padding: 10px 12px 12px 20px;
+}
+
+/* FACE RIGHT */
+
+.dialogueFaceMol_div_titleRight_pos {
+    right: 2.2%;
+    top: -2%;
+}
+
+.dialogueFaceMol_div_faceRight_pos {
+    width: 12%;
+    height: 70%;
+    margin-top: 2%;
+    margin-right: 2%;
+}
+
+.dialogueFaceMol_div_dialLeft_pos {
+    width: 82.7%;
+    height: 70%;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+
+
+/* FACE LEFT */
+
+.dialogueFaceMol_div_titleLeft_pos {
+    left: 2.2%;
+    top: -2%;
+}
+
+.dialogueFaceMol_div_faceLeft_pos {
+    width: 12%;
+    height: 70%;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.dialogueFaceMol_div_dialRight_pos {
+    width: 82.7%;
+    height: 70%;
+    margin-top: 2%;
+    margin-right: 2%;
+}

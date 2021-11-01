@@ -1,204 +1,161 @@
 const { React, that, _, connect, Animated } = require('../../imports')
 const { ComponentSuperclass } = require('../../superclass')
 
-const ImageTilesetMolecule = require('../molecules/image.tileset.molecule')
+const DialogueTypeFaceMol = {
+  left: require('../molecules/dialogue.face.molecule'),
+  right: require('../molecules/dialogue.face.molecule'),
+  none: require('../molecules/dialogue.full.molecule'),
+}
 
 module.exports = class DialogueOrganism extends ComponentSuperclass {
   constructor (props) {
     super(props, 'dialogueOrg')
-    this.maxLengthWithFace = 455
-    this.maxLengthFull = 590
-    this.state = { isVisible: true }
   }
 
-  loadDialogue () {
-    const store = that.store.getState()
-    const lang = _.get(store, 'ressources.language', 'fr')
-    const { dialogue_id, phrase_id } = _.get(store, 'ressources.dialogue', {})
+  cssClasses () { return { div: {
+    main: ['layout_div_bottom_pos'],
+    animated: ['layout_div_fullWH_pos'],
+  } } }
 
-    const dialogue = _.get(that, `dialogues.${lang}.${dialogue_id}.${phrase_id}`, null)
-    if (!dialogue) { return false }
-
-
-    const {
-      face_left,
-      face_right,
-      emotion,
-      message,
-      next_phrase_id,
-    } = dialogue
-
-    const maxLength = face_left ? this.maxLengthWithFace : this.maxLengthFull
-    this.method = face_left ? 'renderDialogueFaceLeft' : 'renderDialogueFull'
-    this.method = face_right ? 'renderDialogueFaceRight' : this.method
-
-    if (message) {
-      this.messages = []
-      this.prepareMessageArray(message, maxLength)
-      this.message = ''
-      this.index = 0
-      setTimeout(this.animate, that.config.game.dialogue.animateSpeed)
-    }
-
-    this.setState({...dialogue})
-  }
-
-  cssClasses () { return {
-    div: {
-      main: ['layout_div_bottom_pos'],
-      padding: [],
-      dialFull: [ 'layout_div_fullWH_pos', 'layout_div_boxRPG_style', 'layout_div_shadow80_style' ],
-
-      titleLeft: [ 'layout_div_top_pos' ],
-      faceLeft: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatLeft_pos' ],
-      dialRight: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatRight_pos' ],
-
-      titleRight: [ 'layout_div_top_pos' ],
-      faceRight: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatRight_pos' ],
-      dialLeft: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatLeft_pos' ],
-    },
-    p: {
-      dialogue: [ 'layout_p_boxRPG_style', 'layout_p_noSelect_style' ],
-    },
-  } }
-
-  renderDialogueFull() {
-    return <>
-      <div className={this.div.dialFull}>
-        <div className={this.div.padding}>
-          <p className={this.p.dialogue}><span>{this.state.message}</span></p>
-        </div>
-      </div>
-  </>}
-
-  renderDialogueFaceRight() {
-    return <>
-      <div className={this.div.titleRight}>
-        <p className={this.p.dialogue}>{this.state.face_right}</p>
-      </div>
-      <div className={this.div.faceRight}>
-          <ImageTilesetMolecule
-            src={that.images.global.face_example}
-            size={'4x2'}
-            pos={'1x1'}
-          />
-      </div>
-      <div className={this.div.dialLeft}>
-        <div className={this.div.padding}>
-          <p className={this.p.dialogue}><span>{this.state.message}</span></p>
-        </div>
-      </div>
-  </>}
-
-  renderDialogueFaceLeft() {
-    return <>
-    <div className={this.div.dialRight}>
-      <div className={this.div.padding}>
-        <p className={this.p.dialogue}><span>{this.state.message}</span></p>
-      </div>
-    </div>
-      <div className={this.div.titleLeft}>
-        <p className={this.p.dialogue}>{this.state.face_left}</p>
-      </div>
-      <div className={this.div.faceLeft}>
-          <ImageTilesetMolecule
-            src={that.images.global.face_example}
-            size={'4x2'}
-            pos={'1x1'}
-          />
-      </div>
-  </>}
-
-  prepareMessageArray (message, maxLength) {
-    if (!message) { return undefined }
-    const messages = []
-    const byWords = message.split(' ')
-    let buffer = ''
-
-    while (byWords[0]) {
-      const newSize = buffer.length + byWords[0].length + 1
-      if (newSize <= maxLength) {
-        buffer = `${buffer} ${byWords.shift()}`
-      } else {
-        messages.push(buffer)
-        buffer = ''
-      }
-    }
-
-    if (buffer.length) { messages.push(buffer) }
-
-    this.messages = messages
-  }
-
-  clearTimeout () {
+   clearTimeout () {
     if (this.animateTimeout) {
       clearTimeout(this.animateTimeout)
       this.animateTimeout = null
     }
   }
 
-  componentWillUnmount () {
+  initNextPhrase () {
+    this.animateSpeed = that.config.game.dialogue.animateSpeed
+    this.setState({
+      message: '',
+      index: 0,
+      isVisible: true,
+      isReady: true,
+    })
+  }
+
+  nextAnimate () {
     this.clearTimeout()
+    this.animateTimeout = setTimeout(this.animate, this.animateSpeed)
   }
-  componentDidMount () {
-    this.loadDialogue()
-    this.setState({ isReady: true })
-  }
+
+  componentWillUnmount () { this.clearTimeout() }
+  componentDidMount () { this.initNextPhrase() }
 
   animate () {
-    if (!this.messages || !this.messages[0].length) { return false }
+    const { message, index } = this.state
+    if (message.length >= this.props.maxLength
+      || index === this.props.message.length) {
+        return this.clearTimeout()
+    }
 
-    const stringArr = this.messages[0].split('')
-    const char = stringArr.shift()
-    this.messages[0] = stringArr.join('')
-    this.message = [this.message, char].join('')
+    const char = this.props.message[index]
+    const newMessage = `${message}${char}`
 
-    this.setState({ message: this.message, isVisible: true })
-    this.animateTimeout = setTimeout(this.animate, that.config.game.dialogue.animateSpeed)
+    this.setState({ message: newMessage, index: (index + 1), isVisible: true })
   }
 
-  stopAnimate () {
-    this.clearTimeout()
-    this.message = [this.message, this.messages[0]].join('')
-    this.messages[0] = ''
-    this.setState({ message: this.message })
+  nextParagraph () {
+    if (this.state.message.length === this.props.message.length) {
+      return null
+    }
+
+    const findPreviousSpaceIndex = (message, index) => {
+      let i = index
+      while (i > 0 && message[i] !== ' ') { i -= 1 }
+      return i === 0 ? index : i
+    }
+    const message = ''
+    const index = findPreviousSpaceIndex(this.props.message, this.state.index)
+    this.setState({ message, index, isVisible: true })
   }
 
   nextPhrase () {
-    const { next_phrase_id } = this.state
+    const { next_phrase_id } = this.props
     if (!next_phrase_id) { return null }
-    that.ressources({ dialogue: { phrase_id: next_phrase_id } })
 
-    const isAnimationOut = this.state.animationOut || this.state.animationOutDelay
+    const isAnimationOut = this.props.animationOut || this.props.animationOutDelay
+    const isAnimationOutDuration = this.props.animationOutDuration || 0
     if (isAnimationOut) {
       this.setState({ isVisible: false })
     }
-    this.loadDialogue()
+    setTimeout(() => {
+      this.initNextPhrase()
+      that.ressources({ dialogue: { phrase_id: next_phrase_id } })
+
+    }, isAnimationOutDuration)
+  }
+
+  revealParagraph () {
+    this.clearTimeout()
+    const { message, index } = this.state
+
+    if (message.length >= this.props.maxLength
+      || index === this.props.message.length) {
+        return false
+    }
+
+    let newMessage = message
+    let i = index
+    while ( newMessage.length < this.props.maxLength && i < this.props.message.length ) {
+      newMessage = `${newMessage}${this.props.message[i]}`
+      i += 1
+    }
+
+    this.setState({ message: newMessage, index: i, isVisible: true })
   }
 
   render () {
-    const isReady = _.get(this, 'state.isReady', false)
-    if (!isReady) { return null }
+    if (!_.get(this, 'state.isReady', false)) { return null }
 
-    const remainMessage = _.get(this, 'messages[0]', '')
-    const onClickMessage = remainMessage.length ? this.stopAnimate : this.nextPhrase
+    const isFullRevealed = this.state.index === this.props.message.length
+    const isParagraphRevealed = this.props.maxLength === this.state.message.length
+
+    if (!isFullRevealed && !isParagraphRevealed) { this.nextAnimate() }
+
+    const onClickMessage = isFullRevealed
+      ? this.nextPhrase
+      : ( isParagraphRevealed
+          ? this.nextParagraph
+          : this.revealParagraph
+      )
+
+    const DialogueDisplay = DialogueTypeFaceMol[this.props.faceType]
+
+    const message = isParagraphRevealed && !isFullRevealed
+        ? `${this.state.message} ...` : this.state.message
+
+    const dialogueDisplayProps = {
+      face: (this.props.face_left || this.props.face_right),
+      message,
+      face_side: this.props.faceSide,
+      face_src: that.images.global.face_example,
+      face_size: '4x2',
+      face_pos: '1x1',
+    }
+
+    const animatedProps = {
+      className: this.div.animated,
+      isVisible: this.state.isVisible,
+      animationIn: this.props.animationIn,
+      animationOut: this.props.animationOut,
+      animationInDelay: this.props.animationInDelay,
+      animationOutDelay: this.props.animationOutDelay,
+      animationInDuration: this.props.animationInDuration,
+      animationOutDuration: this.props.animationOutDuration,
+    }
+
+    const mainDiv = {
+      className: this.div.main,
+      onClick: onClickMessage,
+    }
 
     return <>
-          <div className={this.div.main} onClick={onClickMessage}>
-          <Animated
-            style={{width: '100%', height: '100%'}}
-            isVisible={this.state.isVisible}
-
-            animationIn={this.state.animationIn}
-            animationOut={this.state.animationOut}
-            animationInDelay={this.state.animationInDelay}
-            animationOutDelay={this.state.animationOutDelay}
-            animationInDuration={this.state.animationInDuration}
-            animationOutDuration={this.state.animationOutDuration}
-          >
-            {this[this.method]()}
+      <div {...mainDiv}>
+        <Animated {...animatedProps}>
+          <DialogueDisplay {...dialogueDisplayProps} />
         </Animated>
-          </div>
+      </div>
     </>
   }
 }

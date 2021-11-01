@@ -2,6 +2,8 @@ module.exports = {
     ImageAtom: require('./atoms/image.atom'),
 
     ImageTilesetMolecule: require('./molecules/image.tileset.molecule'),
+    DialogueFullMolecule: require('./molecules/dialogue.full.molecule'),
+    DialogueFaceMolecule: require('./molecules/dialogue.face.molecule'),
 
     DialogueOrganism: require('./organisms/dialogue.organism'),
 
