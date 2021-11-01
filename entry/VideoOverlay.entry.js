@@ -66,7 +66,7 @@ class App extends ComponentSuperclass {
     _.forEach(nextProps, (value, name) =>
       this.pingListener(name, value))
 
-    return false
+    return this.props.language !== nextProps.language
   }
 
   async initiateGame () {
@@ -81,11 +81,10 @@ class App extends ComponentSuperclass {
     this.setState({ isReady: true })
   }
 
-  onKeyEvent (key, e) {
-    console.debug('key event', key)
+  setLanguageMethod () {
+    const lang = _.get(that.store.getState(), 'ressources.language', 'fr')
+    that.lang = that[lang]
   }
-
-  renderEcosystems = () => {}
 
   render () {
     const isReady = _.get(this, 'state.isReady', false)
@@ -94,6 +93,8 @@ class App extends ComponentSuperclass {
       this.isLock = true
       setTimeout(that.websocket.connect, 300)
     }
+
+    this.setLanguageMethod()
 
     return !isReady
       ? null
@@ -104,6 +105,7 @@ class App extends ComponentSuperclass {
 const AppConnected = connect(state => ({
   listener_cutscene_cutscene: state.ressources.cutscene.listener_cutscene_cutscene,
   listener_cutscene_data: state.ressources.cutscene.listener_cutscene_data,
+  language: state.ressources.language,
 
 }), dispatch => ({
   setInput: data => dispatch(inputs.actions.setInput(data)),

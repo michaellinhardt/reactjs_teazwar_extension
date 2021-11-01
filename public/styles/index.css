@@ -2,6 +2,8 @@
 @import './layout/div.layout.style.css';
 @import './layout/p.layout.style.css';
 @import './layout/box.rpg.layout.style.css';
+@import './layout/button.layout.style.css';
+@import './layout/material.icons.layout.style.css';
 
 /* Animation */
 @import './anim/heartbeat.anim.style.css';

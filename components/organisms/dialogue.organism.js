@@ -1,5 +1,7 @@
-const { React, that, _, connect, Animated } = require('../../imports')
+const { React, that, _, Animated } = require('../../imports')
 const { ComponentSuperclass } = require('../../superclass')
+
+const ButtonAtom = require('../atoms/button.atom')
 
 const DialogueTypeFaceMol = {
   left: require('../molecules/dialogue.face.molecule'),
@@ -12,9 +14,16 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
     super(props, 'dialogueOrg')
   }
 
-  cssClasses () { return { div: {
+  cssClasses () { return {
+  div: {
     main: ['layout_div_bottom_pos'],
     animated: ['layout_div_fullWH_pos'],
+
+    skipLeft: ['layout_div_top_pos', 'layout_div_floatLeft_pos'],
+    skipRight: ['layout_div_top_pos', 'layout_div_floatLeft_pos'],
+
+  }, button: {
+    skip: ['layout_button_btnIconTransparent_style'],
   } } }
 
    clearTimeout () {
@@ -36,7 +45,22 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
 
   nextAnimate () {
     this.clearTimeout()
-    this.animateTimeout = setTimeout(this.animate, this.animateSpeed)
+    if (!this.state.autoSkip) {
+      this.animateTimeout = setTimeout(this.animate, this.animateSpeed)
+      return true
+    }
+
+    const isFullRevealed = this.state.index === this.props.message.length
+    const isParagraphRevealed = this.props.maxLength === this.state.message.length
+
+    const method = isFullRevealed
+      ? this.nextPhrase
+      : ( isParagraphRevealed
+          ? this.nextParagraph
+          : this.revealParagraph
+      )
+      this.animateSpeed = that.config.game.dialogue.autoSkipSpeed
+      this.animateTimeout = setTimeout(method.bind(this), this.animateSpeed)
   }
 
   componentWillUnmount () { this.clearTimeout() }
@@ -105,20 +129,20 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
     this.setState({ message: newMessage, index: i, isVisible: true })
   }
 
+  autoSkipMode () { this.setState({ autoSkip: true }) }
+
   render () {
     if (!_.get(this, 'state.isReady', false)) { return null }
 
     const isFullRevealed = this.state.index === this.props.message.length
     const isParagraphRevealed = this.props.maxLength === this.state.message.length
 
-    if (!isFullRevealed && !isParagraphRevealed) { this.nextAnimate() }
+    if ((!isFullRevealed && !isParagraphRevealed)
+      || this.state.autoSkip) {
+      this.nextAnimate()
+    }
 
-    const onClickMessage = isFullRevealed
-      ? this.nextPhrase
-      : ( isParagraphRevealed
-          ? this.nextParagraph
-          : this.revealParagraph
-      )
+    const onClickMessage = this.autoSkipMode
 
     const DialogueDisplay = DialogueTypeFaceMol[this.props.faceType]
 
@@ -147,14 +171,30 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
 
     const mainDiv = {
       className: this.div.main,
+    }
+
+    const divSkip = {
+      className: this.props.faceSide === 'right' ? this.div.skipLeft : this.div.skipRight,
+    }
+
+    const btnSkip = {
+      className: this.button.skip,
+      children: that.lang('button', 'skip'),
+      iconLeft: 'fast_forward',
       onClick: onClickMessage,
     }
 
     return <>
       <div {...mainDiv}>
+
         <Animated {...animatedProps}>
           <DialogueDisplay {...dialogueDisplayProps} />
         </Animated>
+
+        <div {...divSkip}>
+          <ButtonAtom {...btnSkip} />
+        </div>
+
       </div>
     </>
   }

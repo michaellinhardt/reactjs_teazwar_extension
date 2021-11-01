@@ -1,5 +1,6 @@
 module.exports = {
     ImageAtom: require('./atoms/image.atom'),
+    ButtonAtom: require('./atoms/button.atom'),
 
     ImageTilesetMolecule: require('./molecules/image.tileset.molecule'),
     DialogueFullMolecule: require('./molecules/dialogue.full.molecule'),

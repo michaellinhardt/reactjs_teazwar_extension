@@ -1,0 +1,26 @@
+.layout_button_btnIconTransparent_style
+{
+    background-color: transparent;
+    text-align: center;
+    display: inline-block;
+    font-size: 1.1vw;
+    cursor: pointer;
+    border: none;
+    padding: 5px;
+    margin: 0;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.556);
+}
+
+.layout_button_btnIconTransparent_style:hover
+{
+    color: white;
+}
+.layout_div_btnIconTransparentText_style {
+    float: right;
+}
+
+.layout_span_btnIconTransparentIcon_style {
+    float: left;
+    margin-top: -0.1%;
+}
