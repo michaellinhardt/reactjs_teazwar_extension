@@ -3,7 +3,6 @@ const { ComponentSuperclass } = require('../superclass')
 const { store, ui, inputs, ressources, connect, Provider } = require('../redux')
 
 const ComponentsObject = require('../components')
-const ListenersObject = require('../listeners')
 const Components = []
 _.forEach(ComponentsObject, (Component, name) => {
   if (name.endsWith('Ecosystem')) {
@@ -44,7 +43,7 @@ class App extends ComponentSuperclass {
     that.logout = this.logout
   }
 
-  componentWillUnmount(){ that.twitch.stopListening() }
+  componentWillUnmount () { that.twitch.stopListening() }
   componentDidMount () { return this.initiateGame() }
 
   pingListener(ping_key, newValue) {
@@ -71,6 +70,7 @@ class App extends ComponentSuperclass {
   }
 
   async initiateGame () {
+    that.onKeyEvent = this.onKeyEvent
     this.registerGlobalMethods()
     this.instanciateListeners()
     this.instanciateLibraries()
@@ -79,6 +79,10 @@ class App extends ComponentSuperclass {
     // that.loop.start()
     that.cutscenes = require('../data/cutscenes')
     this.setState({ isReady: true })
+  }
+
+  onKeyEvent (key, e) {
+    console.debug('key event', key)
   }
 
   renderEcosystems = () => {}

@@ -1,8 +1,7 @@
-const { that, React, _ } = require('../../imports')
+const { that, _ } = require('../../imports')
 
-module.exports = class ComponentSuperclass extends React.Component {
+module.exports = class ListenerSuperclass {
   constructor () {
-    super()
     that.helpers.code.autoBindMethod(this)
     this.last = {}
     this.schema = {}
