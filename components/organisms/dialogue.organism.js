@@ -1,7 +1,8 @@
-const { React, that, _, Animated } = require('../../imports')
+const { React, that, _, Animated, Bootstrap } = require('../../imports')
 const { ComponentSuperclass } = require('../../superclass')
 
 const ButtonAtom = require('../atoms/button.atom')
+const Tooltip = require('../atoms/tooltip.atom')
 
 const DialogueTypeFaceMol = {
   left: require('../molecules/dialogue.face.molecule'),
@@ -19,7 +20,7 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
     main: ['layout_div_bottom_pos'],
     animated: ['layout_div_fullWH_pos'],
 
-    skipLeft: ['layout_div_top_pos', 'layout_div_floatLeft_pos'],
+      skipLeft: ['layout_div_top_pos', 'layout_div_floatLeft_pos'],
     skipRight: ['layout_div_top_pos', 'layout_div_floatLeft_pos'],
 
   }, button: {
@@ -142,7 +143,14 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
       this.nextAnimate()
     }
 
-    const onClickMessage = this.autoSkipMode
+    const onClickNext = isFullRevealed
+    ? this.nextPhrase
+    : ( isParagraphRevealed
+        ? this.nextParagraph
+        : this.revealParagraph
+    )
+
+    const onClickSkip = this.autoSkipMode
 
     const DialogueDisplay = DialogueTypeFaceMol[this.props.faceType]
 
@@ -159,6 +167,7 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
     }
 
     const animatedProps = {
+      onClick: () => console.debug('lol'),
       className: this.div.animated,
       isVisible: this.state.isVisible,
       animationIn: this.props.animationIn,
@@ -179,9 +188,12 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
 
     const btnSkip = {
       className: this.button.skip,
-      children: that.lang('button', 'skip'),
       iconLeft: 'fast_forward',
-      onClick: onClickMessage,
+      onClick: onClickSkip,
+    }
+
+    const tooltip = {
+      tooltip: that.lang('button', 'skip'),
     }
 
     return <>
@@ -192,7 +204,10 @@ module.exports = class DialogueOrganism extends ComponentSuperclass {
         </Animated>
 
         <div {...divSkip}>
+
+        <Tooltip {...tooltip}>
           <ButtonAtom {...btnSkip} />
+        </Tooltip>
         </div>
 
       </div>

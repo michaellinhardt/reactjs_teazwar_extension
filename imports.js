@@ -52,5 +52,6 @@ module.exports = {
   io: require('socket.io-client').io,
   connect: require('./redux').connect,
   Animated: require('react-animated-css').Animated,
+  Bootstrap: require('react-bootstrap'),
 
 }
