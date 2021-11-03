@@ -6,8 +6,8 @@
 /* FACE RIGHT */
 
 .dialogueFaceMol_div_titleRight_pos {
-    right: 2.2%;
-    top: -2%;
+    right: 2.5%;
+    bottom: 6.5%;
 }
 
 .dialogueFaceMol_div_faceRight_pos {
@@ -29,8 +29,8 @@
 /* FACE LEFT */
 
 .dialogueFaceMol_div_titleLeft_pos {
-    left: 2.2%;
-    top: -2%;
+    left: 2.5%;
+    bottom: 6.5%;
 }
 
 .dialogueFaceMol_div_faceLeft_pos {
@@ -45,4 +45,10 @@
     height: 70%;
     margin-top: 2%;
     margin-right: 2%;
+}
+
+/* TEXt */
+
+.dialogueFaceMol_p_title_style {
+    font-size: 1.4vw;
 }

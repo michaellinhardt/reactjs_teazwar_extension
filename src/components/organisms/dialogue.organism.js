@@ -7,11 +7,13 @@ import LanguageHelper from '../../helpers/language.helper'
 
 import ComponentSuperclass from '../../superclass/component.superclass'
 import ButtonAtom from '../atoms/button.atom'
-import Tooltip from '../atoms/tooltip.atom'
-import Typewriter from '../molecules/typewriter.molecule'
+import TooltipAtom from '../atoms/tooltip.atom'
+import TypewriterMolecule from '../molecules/typewriter.molecule'
+import DialogueAnswerMolecule from '../molecules/dialogue.answer.molecule'
 
 import face from '../molecules/dialogue.face.molecule'
 import none from '../molecules/dialogue.full.molecule'
+import CodeHelper from '../../helpers/code.helper'
 const DialogueTypeFaceMol = { left: face, right: face, none }
 
 // const { Store } = Redux
@@ -35,8 +37,9 @@ export default class DialogueOrganism extends ComponentSuperclass {
       main: ['layout_div_bottom_pos'],
       animated: ['layout_div_fullWH_pos'],
 
-      skipLeft: ['layout_div_top_pos', 'layout_div_floatLeft_pos'],
-      skipRight: ['layout_div_top_pos', 'layout_div_floatRight_pos'],
+      skip: ['layout_div_top_pos', 'layout_div_floatRight_pos'],
+
+      answer: [],
 
     }, span: {
       typewriter: [],
@@ -56,6 +59,8 @@ export default class DialogueOrganism extends ComponentSuperclass {
   }
 
   onClickSkip () {
+    if (this.props.answers) { return false }
+
     console.debug('skip mode')
     this.isSkip = true
     this.isInstant = true
@@ -69,7 +74,10 @@ export default class DialogueOrganism extends ComponentSuperclass {
   onFinish () { this.props.onFinish() }
 
   onClickNext () {
+    if (this.props.answers) { return false }
+
     if (this.isAnimationOver || this.isInstant) {
+
       this.messages.shift()
       if (!this.messages.length) {
         console.debug('no more text')
@@ -118,18 +126,14 @@ export default class DialogueOrganism extends ComponentSuperclass {
       face_pos: '1x1',
     }
 
-    this.div.animated.isVisible = this.state.isVisible
-    this.div.animated.animationIn = this.props.animationIn
-    this.div.animated.animationOut = this.props.animationOut
-    this.div.animated.animationInDelay = this.props.animationInDelay
-    this.div.animated.animationOutDelay = this.props.animationOutDelay
-    this.div.animated.animationInDuration = this.props.animationInDuration
-    this.div.animated.animationOutDuration = this.props.animationOutDuration
+    this.isVisible = !(!this.isSkip && (this.props.animationIn || this.props.animationInDelay))
 
-
-    this.div.skip = this.props.faceSide === 'right'
-      ? this.div.skipLeft
-      : this.div.skipRight,
+    this.div.animated.animationIn = this.props.animationIn || null
+    this.div.animated.animationOut = this.props.animationOut || null
+    this.div.animated.animationInDelay = this.props.animationInDelay || null
+    this.div.animated.animationOutDelay = this.props.animationOutDelay || null
+    this.div.animated.animationInDuration = this.props.animationInDuration || null
+    this.div.animated.animationOutDuration = this.props.animationOutDuration || null
 
     this.span.typewriter.onFinish = this.onFinishTypewriter
 
@@ -137,38 +141,68 @@ export default class DialogueOrganism extends ComponentSuperclass {
     this.isAnimationOver = false
   }
 
+  async appear () {
+    this.isVisible = true
+    await CodeHelper.sleep(100)
+    this.setState({ reRender: true })
+  }
+
+  renderButtonNavigation () {
+    if (this.props.answers) { return null }
+
+    return <>
+      <div {...this.div.skip}>
+        <TooltipAtom {...this.tooltipNext}>
+          <ButtonAtom {...this.button.next} />
+        </TooltipAtom>
+
+        <TooltipAtom {...this.tooltipSkip}>
+          <ButtonAtom {...this.button.skip} />
+        </TooltipAtom>
+      </div>
+    </>
+  }
+
+  renderMessage () { return <TypewriterMolecule {...this.span.typewriter} /> }
+
+  renderAnswers () {
+    return this.props.answers.map((answerObject, key) => {
+      const props = { ...this.div.answer, answerObject }
+      return <DialogueAnswerMolecule key={key} {...props} />
+    })
+  }
+
   render () {
     if (!this.state.isReady) { return null }
 
-    console.debug('render orga dial')
+    console.debug('render orga diad l')
 
     if (this.message !== this.props.message) { this.renderInit() }
 
-    console.debug('message now:', this.messages[0])
+    console.debug('message nowd:', this.messages[0])
 
     this.span.typewriter.message = this.messages[0]
     this.span.typewriter.isInstant = this.isInstant
     this.span.typewriter.isSkip = this.isSkip
 
+    this.div.animated.isVisible = this.isVisible
+
+    this.dialogueDisplayProps.message = this.isVisible ?
+      this.renderMessage() : null
+
+    this.dialogueDisplayProps.answers = this.props.answers
+      ? this.renderAnswers() : null
+
+    if (!this.isVisible) { this.appear() }
+
     return <>
       <div {...this.div.main}>
 
         <Animated {...this.div.animated}>
-          <this.DialogueDisplay {...this.dialogueDisplayProps}>
-            <Typewriter {...this.span.typewriter} />
-          </this.DialogueDisplay>
+          <this.DialogueDisplay {...this.dialogueDisplayProps} />
         </Animated>
 
-        <div {...this.div.skip}>
-
-          <Tooltip {...this.tooltipNext}>
-            <ButtonAtom {...this.button.next} />
-          </Tooltip>
-
-          <Tooltip {...this.tooltipSkip}>
-            <ButtonAtom {...this.button.skip} />
-          </Tooltip>
-        </div>
+        {this.renderButtonNavigation()}
 
       </div>
     </>

@@ -12,23 +12,29 @@ export default class DialogueFaceMolecule extends ComponentSuperclass {
     div: {
       padding: [],
 
-      titleLeft: [ 'layout_div_top_pos' ],
+      titleLeft: [ 'layout_div_bottom_pos' ],
       faceLeft: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatLeft_pos' ],
       dialRight: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatRight_pos' ],
 
-      titleRight: [ 'layout_div_top_pos' ],
+      titleRight: [ 'layout_div_bottom_pos' ],
       faceRight: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatRight_pos' ],
       dialLeft: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatLeft_pos' ],
     },
     p: {
-      dialogue: [ 'layout_p_boxRPG_style', 'layout_p_noSelect_style' ],
+      title: [ 'layout_p_boxRPG_style', 'layout_p_noSelect_style', 'layout_p_strokeBlack_style' ],
+      dialogue: [ 'layout_p_boxRPG_style', 'layout_p_noSelect_style', 'layout_p_strokeBlack_style' ],
     },
   } }
 
-  renderChildren () { return <>
+  renderAnswers () {
+    console.debug('render answers:', this.props.answers)
+    return this.props.answers ? this.props.answers : null
+  }
+
+  renderMessage () { return <>
     <div {...this.div.padding}>
       <p {...this.p.dialogue}>
-        {this.props.children}
+        {this.props.message}
       </p>
     </div>
   </>}
@@ -44,13 +50,14 @@ export default class DialogueFaceMolecule extends ComponentSuperclass {
   renderRight () {
     return <>
       <div {...this.div.dialLeft}>
-        {this.renderChildren()}
-      </div>
-      <div {...this.div.titleRight}>
-        <p {...this.p.dialogue}>{this.props.face}</p>
+        {this.renderAnswers()}
+        {this.renderMessage()}
       </div>
       <div {...this.div.faceRight}>
         {this.renderFace()}
+      </div>
+      <div {...this.div.titleRight}>
+        <p {...this.p.title}>{this.props.face}</p>
       </div>
     </>
   }
@@ -58,13 +65,14 @@ export default class DialogueFaceMolecule extends ComponentSuperclass {
   renderLeft () {
     return <>
       <div {...this.div.dialRight}>
-        {this.renderChildren()}
-      </div>
-      <div {...this.div.titleLeft}>
-        <p {...this.p.dialogue}>{this.props.face}</p>
+        {this.renderAnswers()}
+        {this.renderMessage()}
       </div>
       <div {...this.div.faceLeft}>
         {this.renderFace()}
+      </div>
+      <div {...this.div.titleLeft}>
+        <p {...this.p.title}>{this.props.face}</p>
       </div>
     </>
   }

@@ -3,7 +3,7 @@ export default {
     animateSpeed: 1,
     autoSkipSpeed: 400,
 
-    dialogueMaxLengthWithFace: 340,
-    dialogueMaxLengthFull: 400,
+    dialogueMaxLengthWithFace: 320,
+    dialogueMaxLengthFull: 390,
   },
 }

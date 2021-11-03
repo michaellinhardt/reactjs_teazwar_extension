@@ -20,6 +20,7 @@
 @import './molecules/image.tileset.molecule.style.css';
 @import './molecules/dialogue.full.molecule.style.css';
 @import './molecules/dialogue.face.molecule.style.css';
+@import './molecules/dialogue.answer.molecule.style.css';
 
 body *{
     margin: 0px;

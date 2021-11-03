@@ -1,0 +1,32 @@
+.dialogueAnswerMol_div_answer_pos
+{
+    height: 22%;
+    background-color: green;
+}
+
+.dialogueAnswerMol_div_answer_style {}
+.dialogueAnswerMol_button_answer_pos {}
+
+.dialogueAnswerMol_button_answer_style
+{
+}
+.dialogueAnswerMol_button_answer_style.btn
+{
+    margin: 0px;
+    padding: 0px;
+    margin-top: -0.5%;
+    background-color: yellow;
+}
+
+.dialogueAnswerMol_span_answer_pos
+{
+}
+
+.dialogueAnswerMol_span_answer_style
+{
+    margin: 0px;
+    padding: 0px;
+    font-size: 1.2vw;
+    vertical-align: middle;
+    background-color: red;
+}
