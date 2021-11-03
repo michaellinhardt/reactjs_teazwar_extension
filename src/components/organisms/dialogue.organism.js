@@ -1,23 +1,33 @@
 import { Animated } from 'react-animated-css'
 import React from 'react'
 import images from '../../data/images'
-import cfgGame from '../../config/game.config'
-import Redux from '../../redux'
+// import cfgGame from '../../config/game.config'
+// import Redux from '../../redux'
 import LanguageHelper from '../../helpers/language.helper'
 
 import ComponentSuperclass from '../../superclass/component.superclass'
 import ButtonAtom from '../atoms/button.atom'
 import Tooltip from '../atoms/tooltip.atom'
+import Typewriter from '../molecules/typewriter.molecule'
 
 import face from '../molecules/dialogue.face.molecule'
 import none from '../molecules/dialogue.full.molecule'
 const DialogueTypeFaceMol = { left: face, right: face, none }
 
-const { Store } = Redux
+// const { Store } = Redux
 
 export default class DialogueOrganism extends ComponentSuperclass {
   constructor (props) {
     super(props, 'dialogueOrg')
+
+    this.tooltipSkip = { tooltip: LanguageHelper.lang('button', 'dialogueSkip') }
+    this.tooltipNext = { tooltip: LanguageHelper.lang('button', 'dialogueNext') }
+
+    this.button.next.iconLeft = 'forward'
+    this.button.next.onClick = this.onClickNext
+
+    this.button.skip.iconLeft = 'fast_forward'
+    this.button.skip.onClick = this.onClickSkip
   }
 
   cssClasses () { return {
@@ -26,195 +36,137 @@ export default class DialogueOrganism extends ComponentSuperclass {
       animated: ['layout_div_fullWH_pos'],
 
       skipLeft: ['layout_div_top_pos', 'layout_div_floatLeft_pos'],
-      skipRight: ['layout_div_top_pos', 'layout_div_floatLeft_pos'],
+      skipRight: ['layout_div_top_pos', 'layout_div_floatRight_pos'],
+
+    }, span: {
+      typewriter: [],
 
     }, button: {
+      next: ['layout_button_btnIconTransparent_style'],
       skip: ['layout_button_btnIconTransparent_style'],
     } } }
 
-  clearTimeout () {
-    if (this.animateTimeout) {
-      clearTimeout(this.animateTimeout)
-      this.animateTimeout = null
-    }
+  componentWillUnmount () {}
+  componentDidMount () { this.setState({ isReady: true }) }
+
+  onFinishTypewriter () {
+    console.debug('typewriter finish')
+    this.isAnimationOver = true
+    if (this.isSkip) { this.onClickNext() }
   }
 
-  initNextPhrase () {
-    this.animateSpeed = cfgGame.dialogue.animateSpeed
-    this.setState({
-      message: '',
-      index: 0,
-      isVisible: true,
-      isReady: true,
-    })
+  onClickSkip () {
+    console.debug('skip mode')
+    this.isSkip = true
+    this.isInstant = true
+
+    if (this.isAnimationOver) {
+      this.onClickNext()
+
+    } else { this.setState({ reRender: true }) }
   }
 
-  nextAnimate () {
-    this.clearTimeout()
-    if (!this.state.autoSkip) {
-      this.animateTimeout = setTimeout(this.animate, this.animateSpeed)
-      return true
-    }
+  onFinish () { this.props.onFinish() }
 
-    const isFullRevealed = this.state.index === this.props.message.length
-    const isParagraphRevealed = this.props.maxLength === this.state.message.length
+  onClickNext () {
+    if (this.isAnimationOver || this.isInstant) {
+      this.messages.shift()
+      if (!this.messages.length) {
+        console.debug('no more text')
+        return this.onFinish()
+      }
+      console.debug('send next part..')
 
-    const revealOrNextParagraph =  isParagraphRevealed
-      ? this.nextParagraph
-      : this.revealParagraph
+    } else { this.isInstant = true }
 
-
-    const method = isFullRevealed
-      ? this.nextPhrase
-      : revealOrNextParagraph
-
-    this.animateSpeed = cfgGame.dialogue.autoSkipSpeed
-    this.animateTimeout = setTimeout(method.bind(this), this.animateSpeed)
+    this.setState({ reRender: true })
   }
 
-  componentWillUnmount () { this.clearTimeout() }
-  componentDidMount () { this.initNextPhrase() }
+  initMessageArray () {
+    this.messages = []
+    this.buffer = ''
+    this.words = this.props.message.split(' ')
 
-  animate () {
-    const { message, index } = this.state
-    if (message.length >= this.props.maxLength
-      || index === this.props.message.length) {
-      return this.clearTimeout()
+    while (this.words.length) {
+      const newLength = this.buffer.length + this.words[0].length
+
+      if (newLength <= this.props.maxLength) {
+        this.buffer = `${this.buffer} ${this.words.shift()}`
+
+      } else {
+        this.messages.push(`${this.buffer} ...`)
+        this.buffer = ''
+      }
     }
-
-    const char = this.props.message[index]
-    const newMessage = `${message}${char}`
-
-    this.setState({ message: newMessage, index: (index + 1), isVisible: true })
+    if (this.buffer.length) { this.messages.push(this.buffer) }
+    delete this.buffer
+    delete this.words
   }
 
-  nextParagraph () {
-    if (this.state.message.length === this.props.message.length) {
-      return null
-    }
+  renderInit () {
+    console.debug('render init')
 
-    const findPreviousSpaceIndex = (message, index) => {
-      let i = index
-      while (i > 0 && message[i] !== ' ') { i -= 1 }
-      return i === 0 ? index : i
-    }
-    const message = ''
-    const index = findPreviousSpaceIndex(this.props.message, this.state.index)
-    this.setState({ message, index, isVisible: true })
-  }
+    this.initMessageArray()
 
-  nextPhrase () {
-    const { next_phrase_id } = this.props
-    if (!next_phrase_id) { return null }
+    this.DialogueDisplay = DialogueTypeFaceMol[this.props.faceType]
 
-    const isAnimationOut = this.props.animationOut || this.props.animationOutDelay
-    const isAnimationOutDuration = this.props.animationOutDuration || 0
-    if (isAnimationOut) {
-      this.setState({ isVisible: false })
-    }
-    setTimeout(() => {
-      this.initNextPhrase()
-      Store.ressources({ dialogue: { phrase_id: next_phrase_id } })
-
-    }, isAnimationOutDuration)
-  }
-
-  revealParagraph () {
-    this.clearTimeout()
-    const { message, index } = this.state
-
-    if (message.length >= this.props.maxLength
-      || index === this.props.message.length) {
-      return false
-    }
-
-    let newMessage = message
-    let i = index
-    while ( newMessage.length < this.props.maxLength && i < this.props.message.length ) {
-      newMessage = `${newMessage}${this.props.message[i]}`
-      i += 1
-    }
-
-    this.setState({ message: newMessage, index: i, isVisible: true })
-  }
-
-  autoSkipMode () { this.setState({ autoSkip: true }) }
-
-  render () {
-    if (!this.state.isReady) { return null }
-
-    const isFullRevealed = this.state.index === this.props.message.length
-    const isParagraphRevealed = this.props.maxLength === this.state.message.length
-
-    if ((!isFullRevealed && !isParagraphRevealed)
-      || this.state.autoSkip) {
-      this.nextAnimate()
-    }
-
-    // const revealOrNextParagraph = isParagraphRevealed
-    //   ? this.nextParagraph
-    //   : this.revealParagraph
-
-    // const onClickNext = isFullRevealed
-    //   ? this.nextPhrase
-    //   : revealOrNextParagraph
-
-    const onClickSkip = this.autoSkipMode
-
-    const DialogueDisplay = DialogueTypeFaceMol[this.props.faceType]
-
-    const message = isParagraphRevealed && !isFullRevealed
-      ? `${this.state.message} ...` : this.state.message
-
-    const dialogueDisplayProps = {
+    this.dialogueDisplayProps = {
       face: (this.props.face_left || this.props.face_right),
-      message,
       face_side: this.props.faceSide,
       face_src: images.global.face_example,
       face_size: '4x2',
       face_pos: '1x1',
     }
 
-    const animatedProps = {
-      className: this.div.animated,
-      isVisible: this.state.isVisible,
-      animationIn: this.props.animationIn,
-      animationOut: this.props.animationOut,
-      animationInDelay: this.props.animationInDelay,
-      animationOutDelay: this.props.animationOutDelay,
-      animationInDuration: this.props.animationInDuration,
-      animationOutDuration: this.props.animationOutDuration,
-    }
+    this.div.animated.isVisible = this.state.isVisible
+    this.div.animated.animationIn = this.props.animationIn
+    this.div.animated.animationOut = this.props.animationOut
+    this.div.animated.animationInDelay = this.props.animationInDelay
+    this.div.animated.animationOutDelay = this.props.animationOutDelay
+    this.div.animated.animationInDuration = this.props.animationInDuration
+    this.div.animated.animationOutDuration = this.props.animationOutDuration
 
-    const mainDiv = {
-      className: this.div.main,
-    }
 
-    const divSkip = {
-      className: this.props.faceSide === 'right' ? this.div.skipLeft : this.div.skipRight,
-    }
+    this.div.skip = this.props.faceSide === 'right'
+      ? this.div.skipLeft
+      : this.div.skipRight,
 
-    const btnSkip = {
-      className: this.button.skip,
-      iconLeft: 'fast_forward',
-      onClick: onClickSkip,
-    }
+    this.span.typewriter.onFinish = this.onFinishTypewriter
 
-    const tooltip = {
-      tooltip: LanguageHelper.lang('button', 'skip'),
-    }
+    this.message = this.props.message
+    this.isAnimationOver = false
+  }
+
+  render () {
+    if (!this.state.isReady) { return null }
+
+    console.debug('render orga dial')
+
+    if (this.message !== this.props.message) { this.renderInit() }
+
+    console.debug('message now:', this.messages[0])
+
+    this.span.typewriter.message = this.messages[0]
+    this.span.typewriter.isInstant = this.isInstant
+    this.span.typewriter.isSkip = this.isSkip
 
     return <>
-      <div {...mainDiv}>
+      <div {...this.div.main}>
 
-        <Animated {...animatedProps}>
-          <DialogueDisplay {...dialogueDisplayProps} />
+        <Animated {...this.div.animated}>
+          <this.DialogueDisplay {...this.dialogueDisplayProps}>
+            <Typewriter {...this.span.typewriter} />
+          </this.DialogueDisplay>
         </Animated>
 
-        <div {...divSkip}>
+        <div {...this.div.skip}>
 
-          <Tooltip {...tooltip}>
-            <ButtonAtom {...btnSkip} />
+          <Tooltip {...this.tooltipNext}>
+            <ButtonAtom {...this.button.next} />
+          </Tooltip>
+
+          <Tooltip {...this.tooltipSkip}>
+            <ButtonAtom {...this.button.skip} />
           </Tooltip>
         </div>
 

@@ -72,15 +72,14 @@ class App extends ComponentSuperclass {
 
   render () {
     const isReady = this.state.isReady
+    if (!isReady) { return null }
+
+    this.setLanguageMethod()
 
     if (isReady && !this.isLock) {
       this.isLock = true
       setTimeout(connectSocket, 300)
     }
-
-    this.setLanguageMethod()
-
-    if (!isReady) { return null }
 
     return <>
       <LoadingEcosystem />

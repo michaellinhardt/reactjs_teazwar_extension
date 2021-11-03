@@ -25,9 +25,11 @@ export default class DialogueFaceMolecule extends ComponentSuperclass {
     },
   } }
 
-  renderMessage () { return <>
-    <div className={this.div.padding}>
-      <p className={this.p.dialogue}><span>{this.props.message}</span></p>
+  renderChildren () { return <>
+    <div {...this.div.padding}>
+      <p {...this.p.dialogue}>
+        {this.props.children}
+      </p>
     </div>
   </>}
 
@@ -41,13 +43,13 @@ export default class DialogueFaceMolecule extends ComponentSuperclass {
 
   renderRight () {
     return <>
-      <div className={this.div.dialLeft}>
-        {this.renderMessage()}
+      <div {...this.div.dialLeft}>
+        {this.renderChildren()}
       </div>
-      <div className={this.div.titleRight}>
-        <p className={this.p.dialogue}>{this.props.face}</p>
+      <div {...this.div.titleRight}>
+        <p {...this.p.dialogue}>{this.props.face}</p>
       </div>
-      <div className={this.div.faceRight}>
+      <div {...this.div.faceRight}>
         {this.renderFace()}
       </div>
     </>
@@ -55,13 +57,13 @@ export default class DialogueFaceMolecule extends ComponentSuperclass {
 
   renderLeft () {
     return <>
-      <div className={this.div.dialRight}>
-        {this.renderMessage()}
+      <div {...this.div.dialRight}>
+        {this.renderChildren()}
       </div>
-      <div className={this.div.titleLeft}>
-        <p className={this.p.dialogue}>{this.props.face}</p>
+      <div {...this.div.titleLeft}>
+        <p {...this.p.dialogue}>{this.props.face}</p>
       </div>
-      <div className={this.div.faceLeft}>
+      <div {...this.div.faceLeft}>
         {this.renderFace()}
       </div>
     </>

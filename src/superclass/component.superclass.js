@@ -44,7 +44,7 @@ export default class ComponentSuperclass extends React.Component {
         if (elemType === 'div' && elemId === 'main') {
           classNames.unshift(`${this.componentId}_target_all`)
         }
-        _.set(this, `${elemType}.${elemId}`, classNames.join(' '))
+        _.set(this, `${elemType}.${elemId}`, { className: classNames.join(' ') })
       })
     })
   }

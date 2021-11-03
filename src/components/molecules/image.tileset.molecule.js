@@ -32,14 +32,13 @@ export default class ImageTilesetMolecule extends ComponentSuperclass {
       top: `${pos[1] * -100}%`,
     }
 
+    this.img.tileset.src = img_tileset_src
+    this.img.tileset.style = img_tileset_style
+
     return <>
-      <div className={this.div.main}>
-        <div className={this.div.delimiter}>
-          <img
-            className={this.img.tileset}
-            src={img_tileset_src}
-            style={{...img_tileset_style}}
-          />
+      <div {...this.div.main}>
+        <div {...this.div.delimiter}>
+          <img {...this.img.tileset} />
         </div>
       </div>
     </>

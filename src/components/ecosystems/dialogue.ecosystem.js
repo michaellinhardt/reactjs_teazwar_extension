@@ -2,19 +2,15 @@ import React from 'react'
 import _ from 'lodash'
 import Redux from '../../redux'
 import dialogues from '../../data/dialogues'
-
-const { Store, connect } = Redux
+import cfgGame from '../../config/game.config'
 
 import ComponentSuperclass from '../../superclass/component.superclass'
 import DialogueOrganism from '../organisms/dialogue.organism'
 
+const { Store, connect } = Redux
+
 class DialogueEcosystem extends ComponentSuperclass {
-  constructor (props) {
-    super(props, 'dialogueEco')
-    this.maxLengthWithFace = 350
-    this.maxLengthFull = 400
-    this.state = { isReady: false }
-  }
+  constructor (props) { super(props, 'dialogueEco') }
 
   initDialogueObject () {
     const store = Store.getState()
@@ -23,27 +19,28 @@ class DialogueEcosystem extends ComponentSuperclass {
     if (!dialogue_id || !phrase_id) { return {} }
 
     const dialogueObjectPath = `${lang}.${dialogue_id}.${phrase_id}`
-    const dialogueObject = _.get(dialogues, dialogueObjectPath, null)
-    if (!dialogueObject) { return {} }
+    this.dialogue = _.get(dialogues, dialogueObjectPath, null)
+    if (!this.dialogue) { return {} }
 
     const {
       face_left,
       face_right,
       // emotion,
       // message,
-      // question,
       // next_phrase_id,
-    } = dialogueObject
+    } = this.dialogue
 
-    dialogueObject.maxLength = face_left || face_right ? this.maxLengthWithFace : this.maxLengthFull
-    dialogueObject.faceType = face_left ? 'left' : 'none'
-    dialogueObject.faceType = face_right ? 'right' : dialogueObject.faceType
-    dialogueObject.faceSide = face_left ? 'left' : 'right'
+    this.dialogue.maxLength = face_left || face_right
+      ? cfgGame.dialogue.dialogueMaxLengthWithFace
+      : cfgGame.dialogue.dialogueMaxLengthFull
+    this.dialogue.faceType = face_left ? 'left' : 'none'
+    this.dialogue.faceType = face_right ? 'right' : this.dialogue.faceType
+    this.dialogue.faceSide = face_left ? 'left' : 'right'
 
-    return dialogueObject
+    this.dialogue.onFinish = this.onFinishPhrase
   }
 
-  componentWillUnmount () { this.clearTimeout() }
+  componentWillUnmount () {}
   componentDidMount () { this.initDialogueObject() }
 
   shouldComponentUpdate (nextProps) {
@@ -55,14 +52,22 @@ class DialogueEcosystem extends ComponentSuperclass {
     return true
   }
 
+  onFinishPhrase () {
+    console.debug('phrase is done !')
+    const next_phrase_id = this.dialogue.next_phrase_id
+    if (next_phrase_id) {
+      Store.ressources({ dialogue: { phrase_id: next_phrase_id } })
+    }
+  }
 
   render () {
-    const dialogueObject = this.initDialogueObject()
-    if (_.isEmpty(dialogueObject)) { return null }
+    this.initDialogueObject()
+    if (_.isEmpty(this.dialogue)) { return null }
 
+    console.debug('render main dial')
 
     return <DialogueOrganism
-      {...dialogueObject}
+      {...this.dialogue}
       dialogue_id={this.props.dialogue_id}
       phrase_id={this.props.phrase_id}
     />

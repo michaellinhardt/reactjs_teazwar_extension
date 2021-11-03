@@ -1,3 +1,4 @@
 export default {
-  skip: 'Tout passer',
+  dialogueSkip: 'Passer',
+  dialogueNext: 'Suivant',
 }

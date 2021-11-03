@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ComponentSuperclass from '../../superclass/component.superclass'
 
 export default class DialogueFullMolecule extends ComponentSuperclass {
@@ -18,9 +19,11 @@ export default class DialogueFullMolecule extends ComponentSuperclass {
 
   render () {
     return <>
-      <div className={this.div.dialFull}>
-        <div className={this.div.padding}>
-          <p className={this.p.dialogue}><span>{this.props.message}</span></p>
+      <div {...this.div.dialFull}>
+        <div {...this.div.padding}>
+          <p {...this.p.dialogue}>
+            {this.props.children}
+          </p>
         </div>
       </div>
     </>

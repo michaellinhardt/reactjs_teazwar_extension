@@ -21,30 +21,27 @@ class LoadingEcosystem extends ComponentSuperclass {
     },
   } }
 
-  renderImage (image) { return <>
-    <div className={this.div.main}>
-      <ImageAtom
-        src={image}
-        className={this.img.logoIcon}
-      />
-    </div>
-  </> }
 
   render () {
     const { isSocketConnected, isSocketCommunicating } = this.props
+    if (isSocketConnected && !isSocketCommunicating) { return null }
 
     const imageDisconnected = images.global.logo_icon_disconnected
     const imageConnected = images.global.logo_icon
 
     if (!AuthLib.isAuth()) {
-      return this.renderImage(imageDisconnected)
+      this.img.logoIcon.src = imageDisconnected
+
+    } else {
+      this.img.logoIcon.src = this.props.isSocketConnected
+        ? imageConnected : imageDisconnected
     }
 
-    if (isSocketConnected && !isSocketCommunicating) { return null }
-
-    return this.props.isSocketConnected
-      ? this.renderImage(imageConnected)
-      : this.renderImage(imageDisconnected)
+    return <>
+      <div {...this.div.main}>
+        <ImageAtom {...this.img.logoIcon} />
+      </div>
+    </>
   }
 }
 
