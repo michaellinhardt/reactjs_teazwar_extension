@@ -6,6 +6,7 @@ import cfgGame from '../../config/game.config'
 
 import ComponentSuperclass from '../../superclass/component.superclass'
 import DialogueOrganism from '../organisms/dialogue.organism'
+import dateHelper from '../../helpers/date.helper'
 
 const { Store, connect } = Redux
 
@@ -13,6 +14,7 @@ class DialogueEcosystem extends ComponentSuperclass {
   constructor (props) { super(props, 'dialogueEco') }
 
   initDialogueObject () {
+    this.dialogue = {}
     const store = Store.getState()
     const lang = store.ressources.language
     const { dialogue_id, phrase_id } = store.ressources.dialogue
@@ -38,6 +40,8 @@ class DialogueEcosystem extends ComponentSuperclass {
     this.dialogue.faceSide = face_left ? 'left' : 'right'
 
     this.dialogue.onFinish = this.onFinishPhrase
+
+    Store.ressources({ dialogue: { answer: null } })
   }
 
   componentWillUnmount () {}
@@ -53,10 +57,14 @@ class DialogueEcosystem extends ComponentSuperclass {
   }
 
   onFinishPhrase () {
-    console.debug('phrase is done !')
+    // console.debug('phrase is donee !')
     const next_phrase_id = this.dialogue.next_phrase_id
     if (next_phrase_id) {
       Store.ressources({ dialogue: { phrase_id: next_phrase_id } })
+    } else {
+      Store.ressources({
+        cutscene: { listener_cutscene_exit: dateHelper.timestampMs() },
+      })
     }
   }
 
@@ -64,7 +72,7 @@ class DialogueEcosystem extends ComponentSuperclass {
     this.initDialogueObject()
     if (_.isEmpty(this.dialogue)) { return null }
 
-    console.debug('render main dial')
+    // console.debug('render main dial')
 
     return <DialogueOrganism
       {...this.dialogue}

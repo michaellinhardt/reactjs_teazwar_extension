@@ -1,32 +1,58 @@
 .dialogueAnswerMol_div_answer_pos
 {
-    height: 22%;
-    background-color: green;
+    height: 30%;
+    text-align: center;
 }
 
-.dialogueAnswerMol_div_answer_style {}
-.dialogueAnswerMol_button_answer_pos {}
+/* .dialogueAnswerMol_div_answer_style {} */
+/* .dialogueAnswerMol_button_answer_pos {} */
 
-.dialogueAnswerMol_button_answer_style
+/* .dialogueAnswerMol_button_answer_style {} */
+
+.dialogueAnswerMol_button_answer_pos
 {
-}
-.dialogueAnswerMol_button_answer_style.btn
-{
+    background-color: transparent;
+    border: none;
     margin: 0px;
     padding: 0px;
-    margin-top: -0.5%;
-    background-color: yellow;
+    /* margin-top: -0.5%; */
+}
+
+.dialogueAnswerMol_button_answer_pos:hover .dialogueAnswerMol_span_icon_style
+{
+    visibility: visible;
 }
 
 .dialogueAnswerMol_span_answer_pos
 {
+    margin: 0px;
+    padding: 0px;
 }
 
 .dialogueAnswerMol_span_answer_style
 {
-    margin: 0px;
-    padding: 0px;
-    font-size: 1.2vw;
-    vertical-align: middle;
-    background-color: red;
+    font-size: 1.3vw;
+    text-align: center;
+    line-height: normal;
+}
+
+.dialogueAnswerMol_span_icon_style
+{
+    margin-bottom: -2px;
+    margin-right: 10px;
+    visibility: hidden;
+}
+
+.answer_lock {
+    color: grey;
+}
+
+.icon_lock {
+    margin-bottom: -2px;
+    margin-right: 10px;
+    visibility: hidden;
+}
+
+.icon_selected {
+    visibility: visible;
 }

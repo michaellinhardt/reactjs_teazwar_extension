@@ -1,38 +1,77 @@
 import React from 'react'
+import DateHelper from '../../helpers/date.helper'
+import Redux from '../../redux'
 
 import ComponentSuperclass from '../../superclass/component.superclass'
-import ButtonBootstrap from 'react-bootstrap/Button'
 
-export default class DialogueAnswerMolecule extends ComponentSuperclass {
+class DialogueAnswerMolecule extends ComponentSuperclass {
   constructor (props) {
     super(props, 'dialogueAnswerMol')
   }
 
   cssClasses () { return {
     div: {
-      answer: ['d-grid'],
-    },
-    button: {
+      answer: [],
+
+    }, button: {
       answer: [],
 
     }, span: {
-      answer: [],
+      icon: ['material-icons'],
+      answer: [ 'layout_p_boxRPG_style' ],
+      answerLock: [ 'layout_p_boxRPG_style' ],
     },
   } }
 
+  onAnswer () {
+    Redux.Store.ressources({
+      dialogue: { answer: this.props.answerObject },
+      cutscene: { listener_cutscene_answer: DateHelper.timestampMs() },
+    })
+  }
+
   render () {
 
-    this.span.answer.children = this.props.answerObject.answer
+    const { answer } = this.props
 
-    this.button.answer.children = <span {...this.span.answer} />
+    this.div.answer.onClick = this.onAnswer
+
+    this.span.icon.children = 'forward'
+
     this.button.answer.variant = 'primary'
-    // this.button.answer.size = 'sm'
+    this.button.answer.size = 'sm'
+
+    if (answer && typeof(answer) === 'object' && this.props.answerObject.answer_id) {
+
+      const isMeChoosen = answer.answer_id === this.props.answerObject.answer_id
+
+      this.span.answer.className = !isMeChoosen
+        ? `${this.span.answer.className} answer_lock`
+        : this.span.answer.className
+
+      this.span.icon.className = !isMeChoosen
+        ? 'icon_lock'
+        : `${this.span.icon.className} icon_selected`
+
+      this.div.answer.onClick = () => true
+
+    }
 
     return <>
 
       <div {...this.div.answer}>
-        <ButtonBootstrap {...this.button.answer} />
+        <button {...this.button.answer}>
+          <span {...this.span.answer}>
+            <span {...this.span.icon} />
+            {this.props.answerObject.answer}
+          </span>
+        </button>
       </div>
     </>
   }
 }
+
+export default Redux.connect(state => ({
+  answer: state.ressources.dialogue.answer,
+
+}), null)(DialogueAnswerMolecule)

@@ -53,7 +53,8 @@ class App extends ComponentSuperclass {
     if (isRender) { return true }
 
     this.pingListener(nextProps, 'listener_cutscene_cutscene')
-    this.pingListener(nextProps, 'listener_cutscene_data')
+    this.pingListener(nextProps, 'listener_cutscene_answer')
+    this.pingListener(nextProps, 'listener_cutscene_exit')
 
     return this.props.language !== nextProps.language
   }
@@ -91,7 +92,8 @@ class App extends ComponentSuperclass {
 
 const AppConnected = connect(state => ({
   listener_cutscene_cutscene: state.ressources.cutscene.listener_cutscene_cutscene,
-  listener_cutscene_data: state.ressources.cutscene.listener_cutscene_data,
+  listener_cutscene_answer: state.ressources.cutscene.listener_cutscene_answer,
+  listener_cutscene_exit: state.ressources.cutscene.listener_cutscene_exit,
   language: state.ressources.language,
 
 }), dispatch => ({

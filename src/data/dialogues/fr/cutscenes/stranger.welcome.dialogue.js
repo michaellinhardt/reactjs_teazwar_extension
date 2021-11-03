@@ -12,24 +12,22 @@ export default {
 
   stranger_welcome: {
     entry: {
-      face_left: 'Masochix',
+      face_left: 'Teazyou',
       emotion: 'angry',
       message: 'Hey c\'est toi qui a volé mon makeup ??!!',
       answers: [
         {
           answer: 'Nooooo!',
           next_phrase_id: 'no_i_dont',
-        },
-        {
+        }, {
           answer: 'Yes, and what?..',
           next_phrase_id: 'yes_i_do',
-        },
-        {
+        }, {
           answer: 'Peut etre..',
           next_phrase_id: 'yes_i_do',
         },
       ],
-      next_phrase_id: 'answer_stole_accusation',
+      next_phrase_id: 'no_i_dont',
       animationIn: 'tada',
       animationOut: null,
       animationInDelay: null,

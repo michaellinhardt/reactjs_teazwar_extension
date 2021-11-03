@@ -1,6 +1,18 @@
+.dialogueFullMol_div_answers_pos
+{
+    padding: 0px;
+    margin: 0px;
+    margin-top: 0.5%;
+    height: 90%;
+}
+
 .dialogueFullMol_div_padding_pos
 {
     padding: 10px 12px 12px 20px;
+}
+.dialogueFullMol_div_paddingQuestion_pos
+{
+    padding: 0px 0px 0px 10px;
 }
 
 .dialogueFullMol_div_dialFull_pos
@@ -10,4 +22,10 @@
     margin-top: 2%;
     margin-right: 2%;
     margin-left: 2%;
+}
+
+.dialogueFullMol_p_question_style {
+    font-size: 1.3vw;
+    position: absolute;
+    bottom: 1.2vw;
 }

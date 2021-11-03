@@ -11,6 +11,9 @@ export default class DialogueFaceMolecule extends ComponentSuperclass {
   cssClasses () { return {
     div: {
       padding: [],
+      paddingQuestion: [],
+
+      answers: [],
 
       titleLeft: [ 'layout_div_bottom_pos' ],
       faceLeft: [ 'layout_div_boxRPG_style', 'layout_div_shadow80_style', 'layout_div_floatLeft_pos' ],
@@ -22,22 +25,29 @@ export default class DialogueFaceMolecule extends ComponentSuperclass {
     },
     p: {
       title: [ 'layout_p_boxRPG_style', 'layout_p_noSelect_style', 'layout_p_strokeBlack_style' ],
-      dialogue: [ 'layout_p_boxRPG_style', 'layout_p_noSelect_style', 'layout_p_strokeBlack_style' ],
+      dialogue: [ 'layout_p_boxRPG_style', 'layout_p_noSelect_style' ],
+      question: [ 'layout_p_boxRPG_style', 'layout_p_noSelect_style' ],
     },
   } }
 
   renderAnswers () {
-    console.debug('render answers:', this.props.answers)
-    return this.props.answers ? this.props.answers : null
+    // console.debug('render answers:', this.props.answers)
+    return this.props.answers
+      ? <div {...this.div.answers}>
+        {this.props.answers}
+      </div> : null
   }
 
-  renderMessage () { return <>
-    <div {...this.div.padding}>
-      <p {...this.p.dialogue}>
-        {this.props.message}
-      </p>
-    </div>
-  </>}
+  renderMessage () {
+    const textStyle = this.props.answers ? this.p.question : this.p.dialogue
+    const paddingStyle = this.props.answers ? this.div.paddingQuestion : this.div.padding
+    return <>
+      <div {...paddingStyle}>
+        <p {...textStyle}>
+          {this.props.message}
+        </p>
+      </div>
+    </>}
 
   renderFace () { return <>
     <ImageTilesetMolecule

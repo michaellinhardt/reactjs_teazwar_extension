@@ -53,7 +53,7 @@ export default class DialogueOrganism extends ComponentSuperclass {
   componentDidMount () { this.setState({ isReady: true }) }
 
   onFinishTypewriter () {
-    console.debug('typewriter finish')
+    // console.debug('typewriter finish')
     this.isAnimationOver = true
     if (this.isSkip) { this.onClickNext() }
   }
@@ -61,7 +61,7 @@ export default class DialogueOrganism extends ComponentSuperclass {
   onClickSkip () {
     if (this.props.answers) { return false }
 
-    console.debug('skip mode')
+    // console.debug('skip mode')
     this.isSkip = true
     this.isInstant = true
 
@@ -80,10 +80,10 @@ export default class DialogueOrganism extends ComponentSuperclass {
 
       this.messages.shift()
       if (!this.messages.length) {
-        console.debug('no more text')
+        // console.debug('no more text')
         return this.onFinish()
       }
-      console.debug('send next part..')
+      // console.debug('send next part..')
 
     } else { this.isInstant = true }
 
@@ -112,7 +112,7 @@ export default class DialogueOrganism extends ComponentSuperclass {
   }
 
   renderInit () {
-    console.debug('render init')
+    // console.debug('render init')
 
     this.initMessageArray()
 
@@ -175,11 +175,11 @@ export default class DialogueOrganism extends ComponentSuperclass {
   render () {
     if (!this.state.isReady) { return null }
 
-    console.debug('render orga diad l')
+    // console.debug('render orga diad l')
 
     if (this.message !== this.props.message) { this.renderInit() }
 
-    console.debug('message nowd:', this.messages[0])
+    // console.debug('message nowd:', this.messages[0])
 
     this.span.typewriter.message = this.messages[0]
     this.span.typewriter.isInstant = this.isInstant

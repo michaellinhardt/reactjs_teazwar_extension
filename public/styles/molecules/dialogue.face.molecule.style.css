@@ -1,6 +1,17 @@
+.dialogueFaceMol_div_answers_pos
+{
+    padding: 0px;
+    margin: 0px;
+    margin-top: 0.5%;
+    height: 90%;
+}
 .dialogueFaceMol_div_padding_pos
 {
     padding: 10px 12px 12px 20px;
+}
+.dialogueFaceMol_div_paddingQuestion_pos
+{
+    padding: 0px 0px 0px 10px;
 }
 
 /* FACE RIGHT */
@@ -23,8 +34,6 @@
     margin-top: 2%;
     margin-left: 2%;
 }
-
-
 
 /* FACE LEFT */
 
@@ -51,4 +60,10 @@
 
 .dialogueFaceMol_p_title_style {
     font-size: 1.4vw;
+}
+
+.dialogueFaceMol_p_question_style {
+    font-size: 1.3vw;
+    position: absolute;
+    bottom: 1.2vw;
 }

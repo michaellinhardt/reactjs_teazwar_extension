@@ -16,7 +16,7 @@ export default {
 
   cutscene: {
     listener_cutscene_cutscene: 0,
-    listener_cutscene_data: 0,
+    listener_cutscene_answer: 0,
 
     cutscene_id: null,
     scene_id: null,
@@ -25,6 +25,7 @@ export default {
   dialogue: {
     dialogue_id: null,
     phrase_id: null,
+    answer: null,
   },
 
 

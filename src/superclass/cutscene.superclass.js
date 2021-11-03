@@ -12,7 +12,7 @@ export default class CutsceneSuperclass {
   initScene () {
     const cutscene = Redux.Store.getState().ressources.cutscene
     const scene_id = cutscene.scene_id
-    if (scene_id === this.scene_id || !this[scene_id]) { return false }
+    if (scene_id === this.scene_id) { return false }
 
     const scene_data = this.initSceneData(scene_id)
     const dialogue = this.initSceneDialogue(cutscene.cutscene_id, scene_id)
@@ -36,4 +36,19 @@ export default class CutsceneSuperclass {
     const dialogue = { dialogue_id, phrase_id }
     return dialogue
   }
+
+  clearScene () {
+    Redux.Store.ressources({
+      dialogue: {
+        dialogue_id: null,
+        phrase_id: null,
+        answer: null,
+      },
+      cutscene: {
+        cutscene_id: null,
+        scene_id: null,
+      },
+    })
+  }
+
 }

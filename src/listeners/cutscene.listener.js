@@ -1,5 +1,6 @@
 import Redux from '../redux'
 import cutscenes from '../data/cutscenes'
+import SocketLib from '../library/websocket.library'
 
 import ListenerSuperclass from '../superclass/listener.superclass'
 import CutsceneSuperclass from '../superclass/cutscene.superclass'
@@ -32,8 +33,36 @@ export default class CutsceneListener extends ListenerSuperclass {
     }
   }
 
-  onData (current, next) {
-    console.debug('cutscene data changee,', current, next)
+  async onAnswer () {
+    const { dialogue, cutscene } = Redux.Store.getState().ressources
+    const { answer_id, next_phrase_id } = dialogue.answer || {}
+    const { scene_id } = cutscene
+
+    console.debug('answerr produced', scene_id, answer_id, next_phrase_id)
+
+    if (this.cutscene[`${scene_id}_answer`]) {
+      await this.cutscene[`${scene_id}_answer`]()
+
+    } else if (next_phrase_id) {
+      Redux.Store.ressources({ dialogue: { phrase_id: next_phrase_id } })
+    }
   }
 
+  async onExit () {
+    const { dialogue, cutscene } = Redux.Store.getState().ressources
+    const { answer_id, next_phrase_id } = dialogue.answer || {}
+    const { scene_id } = cutscene
+
+    console.debug('cutscene over, last scene reached', scene_id, answer_id, next_phrase_id)
+
+    if (this.cutscene.exit) {
+      await this.cutscene.exit()
+    }
+
+    await SocketLib.emit('cutscene', 'exit')
+
+    this.cutscene.clearScene()
+
+    delete this.cutscene
+  }
 }
