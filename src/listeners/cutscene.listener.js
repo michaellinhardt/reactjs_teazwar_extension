@@ -38,7 +38,7 @@ export default class CutsceneListener extends ListenerSuperclass {
     const { answer_id, next_phrase_id } = dialogue.answer || {}
     const { scene_id } = cutscene
 
-    console.debug('answerr produced', scene_id, answer_id, next_phrase_id)
+    console.debug('answerr produceds', scene_id, answer_id, next_phrase_id)
 
     if (this.cutscene[`${scene_id}_answer`]) {
       await this.cutscene[`${scene_id}_answer`]()

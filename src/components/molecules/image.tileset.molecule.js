@@ -17,7 +17,7 @@ export default class ImageTilesetMolecule extends ComponentSuperclass {
     },
   } }
 
-  componentDidMount () { setTimeout(() => this.setState({ isReady: true }), 1) }
+  componentDidMount () { setTimeout(() => this.setState({ isReady: true }), 10) }
 
   render () {
     if (!this.state.isReady) { return true }

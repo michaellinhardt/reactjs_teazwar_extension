@@ -13,7 +13,7 @@ export default class extends CutsceneSuperclass {
   entry_answer () {
     const { dialogue, cutscene } = Redux.Store.getState().ressources
     const { answer_id, next_phrase_id } = dialogue.answer || {}
-    const { scene_id } = cutscene
+    // const { scene_id } = cutscene
 
     console.debug('i am edntry answer handler from scene', this.cutscene_id, answer_id)
     Redux.Store.ressources({ dialogue: { phrase_id: next_phrase_id } })

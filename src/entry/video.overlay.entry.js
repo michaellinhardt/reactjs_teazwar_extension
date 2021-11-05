@@ -9,10 +9,10 @@ import LangHelper from '../helpers/language.helper'
 
 
 import ComponentSuperclass from '../superclass/component.superclass'
-import CutsceneListener from '../listeners/cutscene.listener'
 
 import DialogueEcosystem from '../components/ecosystems/dialogue.ecosystem'
 import LoadingEcosystem from '../components/ecosystems/loading.ecosystem'
+import ListenerEcosystem from '../components/ecosystems/listener.ecosystem'
 
 const { Store, ui, inputs, ressources, connect, Provider } = Redux
 const { twitchStopListening, twitchStartListening } = TwitchLib
@@ -20,11 +20,6 @@ const { connectSocket } = SocketLib
 
 class App extends ComponentSuperclass {
   constructor (props) { super(props) }
-
-  instanciateListeners () {
-    this.listeners = {}
-    this.listeners.cutscene = new CutsceneListener()
-  }
 
   registerStoreMethods () {
     Store.inputs = this.props.setInput
@@ -37,31 +32,16 @@ class App extends ComponentSuperclass {
   componentWillUnmount () { twitchStopListening() }
   componentDidMount () { return this.initiateGame() }
 
-  pingListener(nextProps, ping_key) {
-    const newValue = nextProps[ping_key]
-    if (this.props[ping_key] === newValue) { return true }
-
-    const [, listenerName, listenerEvent ] = ping_key.split('_')
-    this.listeners[listenerName].event(listenerEvent)
-    return true
-  }
-
   shouldComponentUpdate (nextProps, nextState) {
     const isReady = nextState.isReady
     const isRender = !isReady || !this.isLock
-    // console.info('should render ?', isRender, isReady, this.isLock)
     if (isRender) { return true }
-
-    this.pingListener(nextProps, 'listener_cutscene_cutscene')
-    this.pingListener(nextProps, 'listener_cutscene_answer')
-    this.pingListener(nextProps, 'listener_cutscene_exit')
 
     return this.props.language !== nextProps.language
   }
 
   async initiateGame () {
     this.registerStoreMethods()
-    this.instanciateListeners()
     twitchStartListening()
     this.setState({ isReady: true })
   }
@@ -83,6 +63,7 @@ class App extends ComponentSuperclass {
     }
 
     return <>
+      <ListenerEcosystem />
       <LoadingEcosystem />
       <DialogueEcosystem />
     </>
@@ -91,9 +72,6 @@ class App extends ComponentSuperclass {
 }
 
 const AppConnected = connect(state => ({
-  listener_cutscene_cutscene: state.ressources.cutscene.listener_cutscene_cutscene,
-  listener_cutscene_answer: state.ressources.cutscene.listener_cutscene_answer,
-  listener_cutscene_exit: state.ressources.cutscene.listener_cutscene_exit,
   language: state.ressources.language,
 
 }), dispatch => ({

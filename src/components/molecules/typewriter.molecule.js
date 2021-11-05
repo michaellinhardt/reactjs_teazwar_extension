@@ -11,8 +11,15 @@ export default class TypewriterMolecule extends ComponentSuperclass {
   componentDidMount () { this.resetText() }
   componentWillUnmount () { this.stopLoop() }
 
-  async loop () {
+  clearTimeout () {
     if (this.itv) { clearTimeout(this.itv) }
+    if (this.itv2) { clearTimeout(this.itv2) }
+    this.itv = null
+    this.itv2 = null
+  }
+
+  async loop () {
+    this.clearTimeout()
     if (!this.status) { return false }
 
     this.animate()
@@ -22,13 +29,13 @@ export default class TypewriterMolecule extends ComponentSuperclass {
   }
 
   startLoop () {
-    if (this.itv) { clearTimeout(this.itv) }
+    this.clearTimeout()
     this.status = true
     this.loop()
   }
 
   stopLoop () {
-    if (this.itv) { clearTimeout(this.itv) }
+    this.clearTimeout()
     this.status = false
   }
 
@@ -71,7 +78,7 @@ export default class TypewriterMolecule extends ComponentSuperclass {
 
   render () {
     if (this.props.message !== this.state.message) {
-      setTimeout(this.resetText, 50)
+      this.itv2 = setTimeout(this.resetText, 50)
       return null
     }
 
