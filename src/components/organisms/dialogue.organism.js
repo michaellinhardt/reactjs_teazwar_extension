@@ -122,8 +122,8 @@ export default class DialogueOrganism extends ComponentSuperclass {
       face: (this.props.face_left || this.props.face_right),
       face_side: this.props.faceSide,
       face_src: images.global.face_example,
-      face_size: '4x2',
-      face_pos: '1x1',
+      face_size: [4, 2],
+      face_pos: [1, 1],
     }
 
     this.isVisible = !(!this.isSkip && (this.props.animationIn || this.props.animationInDelay))

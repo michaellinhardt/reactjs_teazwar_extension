@@ -1,4 +1,5 @@
 /* Layout */
+@import './layout/img.layout.style.css';
 @import './layout/div.layout.style.css';
 @import './layout/p.layout.style.css';
 @import './layout/box.rpg.layout.style.css';
@@ -15,12 +16,19 @@
 
 /* Organisms */
 @import './organisms/dialogue.organism.style.css';
+@import './organisms/generator.selector.part.organism.style.css';
+@import './organisms/generator.selector.item.organism.style.css';
 
 /* Molecules */
 @import './molecules/image.tileset.molecule.style.css';
 @import './molecules/dialogue.full.molecule.style.css';
 @import './molecules/dialogue.face.molecule.style.css';
 @import './molecules/dialogue.answer.molecule.style.css';
+@import './molecules/generator.part.molecule.style.css';
+@import './molecules/generator.item.molecule.style.css';
+
+/* Atom */
+@import './atoms/touch.atom.style.css';
 
 body *{
     margin: 0px;

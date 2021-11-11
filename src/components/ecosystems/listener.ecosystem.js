@@ -2,6 +2,7 @@ import Redux from '../../redux'
 
 import ComponentSuperclass from '../../superclass/component.superclass'
 import CutsceneListener from '../../listeners/cutscene.listener'
+import GeneratorListener from '../../listeners/generator.listener'
 
 class ListernerEcosystem extends ComponentSuperclass {
   constructor (props) { super(props, 'listernerEco') }
@@ -9,6 +10,7 @@ class ListernerEcosystem extends ComponentSuperclass {
   componentDidMount () {
     this.listeners = {}
     this.listeners.cutscene = new CutsceneListener()
+    this.listeners.generator = new GeneratorListener()
     this.setState({ isReady: true })
   }
 
@@ -26,6 +28,7 @@ class ListernerEcosystem extends ComponentSuperclass {
     this.pingListener(nextProps, 'listener_cutscene_cutscene')
     this.pingListener(nextProps, 'listener_cutscene_answer')
     this.pingListener(nextProps, 'listener_cutscene_exit')
+    // this.pingListener(nextProps, 'listener_generator_status')
 
     return false
   }

@@ -1,0 +1,42 @@
+.generatorSelectorItemOrg_div_main_pos
+{
+    width: 96%;
+    height: 10%;
+    left: 2%;
+    bottom: 3%;
+}
+
+.generatorSelectorItemOrg_div_items_pos
+{
+    width: 100%;
+    height: 100%;
+    padding: 0.5%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.generatorSelectorItemOrg_div_item_pos
+{
+    width: 4%;
+    height: 8%;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.generatorSelectorItemOrg_div_notSelected_style IMG:hover
+{
+    -webkit-filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.315));
+    filter: drop-shadow(0px 0px 5px rgb(255, 255, 255, 0.315));
+}
+
+.generatorSelectorItemOrg_button_section_pos
+{
+    top: -50%;
+    outline: none !important;
+    outline-offset: none !important;
+}
+
+/* .generatorSelectorItemOrg_button_sectionGroup_pos
+{
+    size: 'sm';
+} */

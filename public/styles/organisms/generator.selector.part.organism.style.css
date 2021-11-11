@@ -1,0 +1,29 @@
+.generatorSelectorPartOrg_div_main_pos
+{
+    top: 3%;
+    padding: 0.4%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.generatorSelectorPartOrg_div_part_pos
+{
+    width: 4.8vh;
+    height: 4.8vh;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.generatorSelectorPartOrg_div_notSelected_style IMG
+{
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+.generatorSelectorPartOrg_div_notSelected_style IMG:hover
+{
+    -webkit-filter: grayscale(60%);
+    filter: grayscale(60%);
+    opacity: 1;
+}

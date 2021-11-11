@@ -40,6 +40,13 @@
 
 .layout_div_shadow80_style
 {
-    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.78);
-    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.78);
+    -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.78);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.78);
+}
+
+.layout_div_boxTransparentBlack_style
+{
+    border-radius: 4px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.9);
 }

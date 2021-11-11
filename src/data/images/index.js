@@ -15,4 +15,9 @@ export default {
     face_example: require('./files/global/face_example.png'),
   },
 
+  icons: {
+    generatorPart: require('./files/icons/generator.part.png'),
+    generatorPartXY: [5, 4],
+  },
+
 }

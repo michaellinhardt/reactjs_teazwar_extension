@@ -13,6 +13,7 @@ import ComponentSuperclass from '../superclass/component.superclass'
 import DialogueEcosystem from '../components/ecosystems/dialogue.ecosystem'
 import LoadingEcosystem from '../components/ecosystems/loading.ecosystem'
 import ListenerEcosystem from '../components/ecosystems/listener.ecosystem'
+import GeneratorEcosystem from '../components/ecosystems/generator.ecosystem'
 
 const { Store, ui, inputs, ressources, connect, Provider } = Redux
 const { twitchStopListening, twitchStartListening } = TwitchLib
@@ -63,6 +64,7 @@ class App extends ComponentSuperclass {
     }
 
     return <>
+      <GeneratorEcosystem />
       <ListenerEcosystem />
       <LoadingEcosystem />
       <DialogueEcosystem />
