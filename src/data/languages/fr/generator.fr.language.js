@@ -21,4 +21,7 @@ export default {
   m: 'Homme',
   f: 'Femme',
   k: 'Enfant',
+  M: 'H',
+  F: 'F',
+  K: 'E',
 }

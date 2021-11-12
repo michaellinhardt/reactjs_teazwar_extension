@@ -12,15 +12,20 @@ export default class ButtonAtom extends React.Component {
     const id = `tooltip-${StringHelper.uuid()}`
 
     const tooltip = {
-      style,
-      className,
       id,
       children: this.props.tooltip,
     }
 
+    const triggerProps = {
+      style,
+      className,
+      placement: this.props.placement || 'auto',
+      overlay: <Tooltip {...tooltip} />,
+    }
+
     return <>
-      <OverlayTrigger overlay={<Tooltip {...tooltip} />}>
-        <span className="d-inline-block">
+      <OverlayTrigger {...triggerProps}>
+        <span>
           {this.props.children}
         </span>
       </OverlayTrigger>

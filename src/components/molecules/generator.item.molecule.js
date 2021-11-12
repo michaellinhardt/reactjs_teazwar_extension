@@ -1,6 +1,6 @@
 import React from 'react'
 import ressourcesGenerator from '../../data/generator/ressources.flat.generator'
-
+import images from '../../data/images'
 import ComponentSuperclass from '../../superclass/component.superclass'
 import ImageAtom from '../atoms/image.atom'
 
@@ -25,12 +25,15 @@ export default class GeneratorItemMolecule extends ComponentSuperclass {
 
     const { item_id, part_id, gender_id } = this.props
 
-    const ressource = ressourcesGenerator[gender_id][part_id][item_id]
+    if (item_id !== null) {
+      const ressource = ressourcesGenerator[gender_id][part_id][item_id]
+      this.icon.item.src = ressource.ico.colors[0]
 
-    this.icon.item.src = ressource.ico.colors[0]
+    } else {
+      this.icon.item.src = images.generator.emptyPart
+    }
 
     this.icon.item.onClick = this.onClick.bind(this)
-
     this.icon.item.fluid = true
 
     return <ImageAtom {...this.icon.item} />

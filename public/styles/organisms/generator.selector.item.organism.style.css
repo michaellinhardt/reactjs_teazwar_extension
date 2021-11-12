@@ -32,11 +32,10 @@
 .generatorSelectorItemOrg_button_section_pos
 {
     top: -50%;
-    outline: none !important;
-    outline-offset: none !important;
 }
 
-/* .generatorSelectorItemOrg_button_sectionGroup_pos
+.generatorSelectorItemOrg_button_genders_pos
 {
-    size: 'sm';
-} */
+    top: -50%;
+    right: 0;
+}

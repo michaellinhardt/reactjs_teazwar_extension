@@ -20,4 +20,8 @@ export default {
     generatorPartXY: [5, 4],
   },
 
+  generator: {
+    emptyPart: require('./files/generator/empty.part.png'),
+  },
+
 }

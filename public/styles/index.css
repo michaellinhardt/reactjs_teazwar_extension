@@ -35,3 +35,11 @@ body *{
     padding: 0px;
     line-height: normal;
 }
+
+BUTTON:active:focus,
+BUTTON:active,
+BUTTON:focus
+{
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}

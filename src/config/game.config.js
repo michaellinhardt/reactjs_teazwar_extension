@@ -10,7 +10,23 @@ export default {
   ui: {
     itvTouchIterate: 100,
     itvTouchActivate: 1000,
+  },
 
-    generatorMaxItem: 25,
+  generator: {
+    maxDisplayedItem: 25,
+
+    partCanBeNull: {
+      accA: true,
+      accB: true,
+      beard: true,
+      beastEars: true,
+      cloak: true,
+      facialMark: true,
+      frontHair: true,
+      glasses: true,
+      rearHair: true,
+      tail: true,
+      wing: true,
+    },
   },
 }
