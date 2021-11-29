@@ -1,0 +1,15 @@
+.faceGeneratorCan_div_main_pos
+{
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translate(-50%);
+    width: 144px;
+    height: 144px;
+}
+.faceGeneratorCan_div_main_style
+{
+    border: 1.5px solid black;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.5);
+}

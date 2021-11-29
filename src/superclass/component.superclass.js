@@ -14,6 +14,12 @@ export default class ComponentSuperclass extends React.Component {
     this.setRenderHandler()
   }
 
+  onNextFrame (callback) {
+    setTimeout(() =>
+      requestAnimationFrame(callback.bind(this)),
+    10)
+  }
+
   renderHandler () {
     const store = Redux.Store.getState()
     const isVisible = _.get(store.ressources.scene_data, `${this.componentId}.isVisible`, false)

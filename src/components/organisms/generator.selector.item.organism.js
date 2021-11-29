@@ -25,12 +25,14 @@ class GeneratorSelectorItemOrganism extends ComponentSuperclass {
       selected: ['layout_img_pngSelected_style'],
       notSelected: [],
 
+      genders: ['layout_div_top_pos'],
+
     }, button: {
       section: ['layout_div_top_pos'],
       sectionGroup: ['layout_div_shadow80_style', 'layout_div_boxTransparentBlack_style'],
       sectionButton: [],
 
-      genders: ['layout_div_top_pos'],
+      genders: [],
       gendersGroup: ['layout_div_shadow80_style', 'layout_div_boxTransparentBlack_style'],
       gendersButton: [],
     }
@@ -79,28 +81,30 @@ class GeneratorSelectorItemOrganism extends ComponentSuperclass {
     const genders = ['M', 'F', 'K']
 
     return <>
-      <ButtonToolbar {...this.button.genders}>
-        <ButtonGroup {...this.button.gendersGroup}>
-          {genders.map((gender, i) => {
-            const genderLower = gender.toLowerCase()
-            const props = {
-              ...this.button.gendersButton,
-              variant: 'secondary',
-              active: genderLower === this.props.gender_id,
-              key: `btnGenders_${i}`,
-              onClick: () => this.onClickGender(gender),
-            }
-            const toolipProps = {
-              className: 'layout_div_fullWH_pos',
-              tooltip: languageHelper.lang('generator', genderLower),
-              children: languageHelper.lang('generator', gender),
-            }
-            props.children = <TooltipAtom {...toolipProps} />
-            // eslint-disable-next-line react/jsx-key
-            return <Button {...props} />
-          })}
-        </ButtonGroup>
-      </ButtonToolbar>
+      <div {...this.div.genders}>
+        <ButtonToolbar {...this.button.genders}>
+          <ButtonGroup {...this.button.gendersGroup}>
+            {genders.map((gender, i) => {
+              const genderLower = gender.toLowerCase()
+              const props = {
+                ...this.button.gendersButton,
+                variant: 'secondary',
+                active: genderLower === this.props.gender_id,
+                key: `btnGenders_${i}`,
+                onClick: () => this.onClickGender(gender),
+              }
+              const toolipProps = {
+              // className: 'layout_div_fullWH_pos',
+                tooltip: languageHelper.lang('generator', genderLower),
+                children: languageHelper.lang('generator', gender),
+              }
+              props.children = <TooltipAtom {...toolipProps} />
+              // eslint-disable-next-line react/jsx-key
+              return <Button {...props} />
+            })}
+          </ButtonGroup>
+        </ButtonToolbar>
+      </div>
     </>
   }
 

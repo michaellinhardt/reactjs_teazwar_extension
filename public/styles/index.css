@@ -30,10 +30,19 @@
 /* Atom */
 @import './atoms/touch.atom.style.css';
 
+/* Canvas */
+@import './canvas/face.generator.canvas.style.css';
+
 body *{
     margin: 0px;
     padding: 0px;
     line-height: normal;
+}
+
+BUTTON
+{
+    padding: 0.5vh 1vh !important;
+    font-size: 2vh !important;
 }
 
 BUTTON:active:focus,
@@ -42,4 +51,9 @@ BUTTON:focus
 {
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
+}
+
+CANVAS
+{
+    image-rendering: pixelated;
 }

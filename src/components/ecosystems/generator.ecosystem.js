@@ -4,6 +4,7 @@ import Redux from '../../redux'
 import ComponentSuperclass from '../../superclass/component.superclass'
 import GeneratorSelectorPartOrganism from '../organisms/generator.selector.part.organism'
 import GeneratorSelectorItemOrganism from '../organisms/generator.selector.item.organism'
+import FaceGeneratorCanvas from '../canvas/face.generator.canvas'
 
 class GeneratorEcosystem extends ComponentSuperclass {
   constructor (props) { super(props, 'generatorEco') }
@@ -14,6 +15,7 @@ class GeneratorEcosystem extends ComponentSuperclass {
     if (!this.state.isReady) { return null }
 
     return <>
+      <FaceGeneratorCanvas />
       <GeneratorSelectorPartOrganism />
       <GeneratorSelectorItemOrganism />
     </>
